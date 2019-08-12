@@ -1,21 +1,23 @@
+using System.IO;
 using System.Threading.Tasks;
 using CocoriCore;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
-namespace Ervad.Api.WebApi
+namespace Ninja.Tmp1.Api
 {
     public class AppHttpResponseWriter : IHttpResponseWriter
     {
+        private readonly JsonSerializer jsonSerializer;
         private readonly HttpResponseWriterFileHandler httpResponseWriterFileHandler;
-        private readonly HttpResponseWriterDefaultHandler httpResponseWriterDefaultHandler;
 
         public AppHttpResponseWriter(
-            HttpResponseWriterFileHandler httpResponseWriterFileHandler,
-            HttpResponseWriterDefaultHandler httpResponseWriterDefaultHandler
+            JsonSerializer jsonSerializer,
+            HttpResponseWriterFileHandler httpResponseWriterFileHandler
         )
         {
+            this.jsonSerializer = jsonSerializer;
             this.httpResponseWriterFileHandler = httpResponseWriterFileHandler;
-            this.httpResponseWriterDefaultHandler = httpResponseWriterDefaultHandler;
         }
 
         public async Task WriteResponseAsync(object response, HttpResponse httpResponse)
@@ -28,15 +30,15 @@ namespace Ervad.Api.WebApi
 
             if (response is FileResponse)
                 await httpResponseWriterFileHandler.WriteResponseAsync(context);
-            /*
-            else if (response is LogInResponse)
+            else
             {
-                context.Response = new {Token = ((LogInResponse) response).UserId};
-                await httpResponseWriterDefaultHandler.WriteResponseAsync(context);
+                using (var stringWriter = new StringWriter())
+                {
+                    httpResponse.ContentType = "application/json; charset=utf-8";
+                    jsonSerializer.Serialize(stringWriter, response);
+                    await httpResponse.WriteAsync(stringWriter.ToString());
+                }
             }
-            */
-            else 
-                await httpResponseWriterDefaultHandler.WriteResponseAsync(context);
         }
     }
 }

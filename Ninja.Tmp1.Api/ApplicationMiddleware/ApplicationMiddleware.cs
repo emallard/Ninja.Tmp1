@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using CocoriCore;
 
-namespace Ervad.Api.WebApi
+namespace Ninja.Tmp1.Api
 {
     public class ApplicationMiddleware
     {

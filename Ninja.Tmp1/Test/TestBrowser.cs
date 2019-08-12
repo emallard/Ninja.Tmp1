@@ -34,7 +34,9 @@ namespace Ninja.Tmp1
         public async Task<TGet> Submit<TPost, TPostResponse, TGet>(Submit<TPost, TPostResponse, TGet> submit, TPost post) where TPost : IMessage<TPostResponse>
         {
             var response = await this.ExecuteAsync(post);
-            return submit.CreateTRedirectGet(response);
+            var redirect = submit.RedirectMessage;
+            submit.CreateTRedirectGet(response, redirect);
+            return redirect;
         }
 
         private async Task<T> ExecuteAsync<T>(IMessage<T> message)

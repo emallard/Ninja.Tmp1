@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using Ninja.Tmp1;
 
-namespace Ervad.Api.WebApi
+namespace Ninja.Tmp1.Api
 {
 
     public class RouterConfiguration

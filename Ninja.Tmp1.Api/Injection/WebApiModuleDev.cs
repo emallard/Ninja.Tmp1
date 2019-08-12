@@ -8,7 +8,7 @@ using Ninject;
 using Jose;
 using CocoriCore.TestUtils;
 
-namespace Ervad.Api.WebApi
+namespace Ninja.Tmp1.Api
 {
     public class WebApiModuleDev : NinjectModule
     {

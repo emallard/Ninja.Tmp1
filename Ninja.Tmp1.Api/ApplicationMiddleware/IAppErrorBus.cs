@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Ervad.Api.WebApi
+namespace Ninja.Tmp1.Api
 {
     public interface IAppErrorBus
     {

@@ -2,33 +2,85 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CocoriCore;
+using CocoriCore.Ninject;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Ninject;
+using Ninject.Extensions.ContextPreservation;
+using Ninject.Extensions.NamedScope;
 
 namespace Ninja.Tmp1.Api
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+        public Startup(IConfiguration configuration)
         {
+            Configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public IConfiguration Configuration { get; }
+
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            /*
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.AllowAnyOrigin();
+                });
+            });*/
+        }
+
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            var kernel = CreateKernel();
+            var unitOfWorkFactory = kernel.Get<IUnitOfWorkFactory>();
 
-            app.Run(async (context) =>
+
+            app.Use(async (ctx, next) =>
             {
-                await context.Response.WriteAsync("Hello World!");
+                using (var unitOfWork = unitOfWorkFactory.NewUnitOfWork())
+                {
+                    await unitOfWork.Resolve<ApplicationMiddleware>().InvokeAsync(ctx, next);
+                }
             });
+
+            // TODO restreindre CORS à l'nevironnement de développement
+            //app.UseCors(MyAllowSpecificOrigins);
+
+            // else
+            // {
+            //     app.UseExceptionHandler("/Error");
+            //     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            //     //app.UseHsts();
+            // }
+
+            // //app.UseHttpsRedirection();
+            // //app.UseStaticFiles();
+            // //app.UseCookiePolicy();
+        }
+
+
+
+        public static StandardKernel CreateKernel()
+        {
+            var kernel = new StandardKernel();
+            kernel.Load(new NamedScopeModule());
+            kernel.Load(new ContextPreservationModule());
+
+            kernel.Load(new CocoricoreNinjectModule());
+            kernel.Load(new WebApiModule());
+
+            return kernel;
         }
     }
 }

@@ -9,7 +9,7 @@ using Ninject;
 using Jose;
 using CocoriCore.TestUtils;
 
-namespace Ervad.Api.WebApi
+namespace Ninja.Tmp1.Api
 {
     public class WebApiModule : NinjectModule
     {
@@ -37,7 +37,14 @@ namespace Ervad.Api.WebApi
             this.Bind<IRouter>().To<Router>().InSingletonScope();
 
             // Autres services
-            this.Bind<JsonSerializer>().ToConstant(new JsonSerializer());
+            var settings = new JsonSerializerSettings();
+
+            this.Bind<JsonSerializer>().ToMethod(ctx =>
+            {
+                var serializer = new JsonSerializer();
+                serializer.ContractResolver = ctx.GetContextPreservingResolutionRoot().Get<CustomResolver>();
+                return serializer;
+            }).InSingletonScope();
             this.Bind<IClock>().To<Clock>().InSingletonScope();
 
             /*

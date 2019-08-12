@@ -15,7 +15,7 @@ namespace Ninja.Tmp1
     {
         public Link<Users_MotDePasseOublie_GET> MotDePasseOublie;
         public Submit<Users_Connexion_POST, Users_Connexion_POSTResponse, Vendeur_Dashboard_GET> Submit =
-            new Submit<Users_Connexion_POST, Users_Connexion_POSTResponse, Vendeur_Dashboard_GET>(reponse => new Vendeur_Dashboard_GET());
+            new Submit<Users_Connexion_POST, Users_Connexion_POSTResponse, Vendeur_Dashboard_GET>(new Vendeur_Dashboard_GET(), (rep, red) => { });
     }
 
     public class Users_Connexion_GETHandler : MessageHandler<Users_Connexion_GET, Users_Connexion_GETResponse>
@@ -29,7 +29,7 @@ namespace Ninja.Tmp1
             await Task.CompletedTask;
             var response = new Users_Connexion_GETResponse();
             response.MotDePasseOublie = Link.New(new Users_MotDePasseOublie_GET());
-            response.Submit = new Submit<Users_Connexion_POST, Users_Connexion_POSTResponse, Vendeur_Dashboard_GET>();
+            response.Submit = new Submit<Users_Connexion_POST, Users_Connexion_POSTResponse, Vendeur_Dashboard_GET>(new Vendeur_Dashboard_GET());
             return response;
         }
 

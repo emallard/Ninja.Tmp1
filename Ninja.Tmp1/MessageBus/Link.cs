@@ -17,10 +17,16 @@ namespace Ninja.Tmp1
         }
 
         public T Message { get; set; }
+        public object GetMessage => Message;
     }
 
-    public interface ILink<out T>
+    public interface ILink<out T> : ILink
     {
         T Message { get; }
+    }
+
+    public interface ILink
+    {
+        object GetMessage { get; }
     }
 }

@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Ervad.Api.WebApi
+namespace Ninja.Tmp1.Api
 {
     public class AppTracer : IAppTracer
     {

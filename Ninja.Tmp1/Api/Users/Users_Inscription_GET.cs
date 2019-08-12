@@ -10,7 +10,7 @@ namespace Ninja.Tmp1
     public class Users_Inscription_GETResponse
     {
         public Submit<Users_Inscription_POST, Users_Inscription_POSTResponse, Vendeur_Dashboard_GET> Submit =
-            new Submit<Users_Inscription_POST, Users_Inscription_POSTResponse, Vendeur_Dashboard_GET>(r => new Vendeur_Dashboard_GET());
+            new Submit<Users_Inscription_POST, Users_Inscription_POSTResponse, Vendeur_Dashboard_GET>(new Vendeur_Dashboard_GET());
     }
 
 }

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CocoriCore;
-namespace Ervad.Api.WebApi
+namespace Ninja.Tmp1.Api
 {
 
     public class ApiFootprintQuery : IQuery

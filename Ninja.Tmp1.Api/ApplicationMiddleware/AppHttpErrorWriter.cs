@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using CocoriCore;
 using Microsoft.AspNetCore.Http;
 
-namespace Ervad.Api.WebApi
+namespace Ninja.Tmp1.Api
 {
     public class AppHttpErrorWriter : IHttpErrorWriter
     {
@@ -21,13 +21,14 @@ namespace Ervad.Api.WebApi
 
         public async Task WriteErrorAsync(Exception exception, HttpResponse httpResponse)
         {
-            var httpErrorContext = new HttpErrorWriterContext() {
+            var httpErrorContext = new HttpErrorWriterContext()
+            {
                 DebugMode = () => false,
                 Exception = exception,
                 HttpResponse = httpResponse,
                 Data = null
             };
-            
+
             if (exception is RouteNotFoundException)
                 await routeNotFoundExceptionWriter.WriteResponseAsync(httpErrorContext);
             else

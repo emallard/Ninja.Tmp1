@@ -8,15 +8,16 @@ namespace CocoriCore
         public Form(TRedirectGet redirectMessage)
         {
             RedirectMessage = redirectMessage;
+            FillRedirect = (r, m) => { };
         }
 
-        public Form(TRedirectGet redirectMessage, Action<TPostResponse, TRedirectGet> createTRedirectGet)
+        public Form(TRedirectGet redirectMessage, Action<TPostResponse, TRedirectGet> fillRedirect)
         {
             RedirectMessage = redirectMessage;
-            CreateTRedirectGet = createTRedirectGet;
+            FillRedirect = fillRedirect;
         }
 
-        public Action<TPostResponse, TRedirectGet> CreateTRedirectGet { get; }
+        public Action<TPostResponse, TRedirectGet> FillRedirect { get; }
         public TRedirectGet RedirectMessage { get; }
 
         public Type GetPostType()

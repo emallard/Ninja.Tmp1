@@ -24,7 +24,7 @@ namespace Ninja.Tmp1
             }));
 
             dashboard.Should().NotBeNull();
-
+            /*
 
             var accueil = await user.Click(dashboard.MenuUtilisateur.Deconnexion);
             var connexion = await user.Click(accueil.Connexion);
@@ -36,6 +36,7 @@ namespace Ninja.Tmp1
             });
 
             connexionGet.Should().NotBeNull();
+            */
         }
 
         public async Task MauvaisMotDePasse()
@@ -45,7 +46,7 @@ namespace Ninja.Tmp1
 
             var connexion = await browser.Click(accueil.Connexion);
 
-            Func<Task> a = async () => await browser.Submit(connexion.Submit, new Users_Connexion_POST()
+            Func<Task> a = async () => await browser.Submit(connexion.Form, new Users_Connexion_POST()
             {
                 Email = new Email { Value = "aa@aa.aa" },
                 Password = new Password { Value = "azerty" }

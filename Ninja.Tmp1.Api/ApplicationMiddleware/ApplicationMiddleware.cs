@@ -5,6 +5,7 @@ using CocoriCore;
 
 namespace Ninja.Tmp1.Api
 {
+
     public class ApplicationMiddleware
     {
         private readonly IRouter router;
@@ -48,8 +49,8 @@ namespace Ninja.Tmp1.Api
                     var response = await messageBus.ExecuteAsync(message);
                     await responseWriter.WriteResponseAsync(response, httpContext.Response);
                 }
-                //else
-                //    throw new RouteNotFoundException(httpContext);
+                else
+                    throw new RouteNotFoundException(httpContext);
             }
             catch (Exception exception)
             {
@@ -61,8 +62,8 @@ namespace Ninja.Tmp1.Api
             await tracer.Trace(trace);
 
             // next if route not found  ?
-            if (route == null)
-                await next();
+            //if (route == null)
+            //    await next();
         }
     }
 }

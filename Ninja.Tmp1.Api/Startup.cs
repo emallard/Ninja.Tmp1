@@ -17,7 +17,7 @@ namespace Ninja.Tmp1.Api
 {
     public class Startup
     {
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        //readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         public Startup(IConfiguration configuration)
         {
@@ -55,7 +55,7 @@ namespace Ninja.Tmp1.Api
             });
 
             // TODO restreindre CORS à l'environnement de développement
-            //app.UseCors(MyAllowSpecificOrigins);
+            // app.UseCors(MyAllowSpecificOrigins);
 
             // else
             // {

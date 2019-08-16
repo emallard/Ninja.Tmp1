@@ -8,14 +8,11 @@ namespace Ninja.Tmp1
     public class TestBrowser : IBrowser
     {
         private readonly IUnitOfWorkFactory unitOfWorkFactory;
-        private readonly IMessageBus messageBus;
 
         public TestBrowser(
-            IUnitOfWorkFactory unitOfWorkFactory,
-            IMessageBus messageBus)
+            IUnitOfWorkFactory unitOfWorkFactory)
         {
             this.unitOfWorkFactory = unitOfWorkFactory;
-            this.messageBus = messageBus;
         }
 
         public async Task<T> Click<T>(ILink<IMessage<T>> a)
@@ -32,7 +29,7 @@ namespace Ninja.Tmp1
         {
             var response = await this.ExecuteAsync(post);
             var redirect = form.RedirectMessage;
-            form.CreateTRedirectGet(response, redirect);
+            form.FillRedirect(response, redirect);
             return redirect;
         }
 

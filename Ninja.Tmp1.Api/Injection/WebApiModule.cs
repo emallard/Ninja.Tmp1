@@ -28,10 +28,19 @@ namespace Ninja.Tmp1.Api
 
             // Middleware
             this.Bind<ApplicationMiddleware>().ToSelf();
-            //this.Bind<IAppTracer>().To<AppTracer>();
-            this.Bind<IErrorBus>().To<AppErrorBus>();
-            this.Bind<IHttpErrorWriter>().To<AppHttpErrorWriter>().InSingletonScope();
-            this.Bind<IHttpResponseWriter>().To<AppHttpResponseWriter>().InSingletonScope();
+            this.Bind<MessageDeserializer>().ToSelf();
+            this.Bind<IErrorBus>().To<MyErrorBus>().InNamedScope("unitofwork");
+
+            this.Bind<IHttpErrorWriter>().To<HttpErrorWriter>().InSingletonScope();
+            this.Bind<HttpErrorWriterOptions>().ToConstant(HttpErrorWriterConfiguration.Options());
+            //builder.RegisterAssemblyTypes(cocoriCoreAssembly, apiAssembly).AssignableTo<IHttpErrorWriterHandler>().AsSelf();
+
+            this.Bind<IHttpResponseWriter>().To<HttpResponseWriter>().InSingletonScope();
+            this.Bind<HttpResponseWriterOptions>().ToConstant(HttpResponseWriterConfiguration.Options());
+            // builder.RegisterAssemblyTypes(cocoriCoreAssembly, cocoriCoreODataAssembly, apiAssembly).AssignableTo<IHttpReponseWriterHandler>().AsSelf();
+
+            this.Bind<ITracer>().To<Tracer>();
+
             //this.Bind<IUserService>().To<UserService>().InNamedScope("unitofwork");
             this.Bind<RouterOptions>().ToConstant(RouterConfiguration.Options());
             this.Bind<IRouter>().To<Router>().InSingletonScope();

@@ -14,13 +14,14 @@ namespace Ninja.Tmp1
 
         public MessageBus(
             HandlerFinder handlerTypes,
-            IFactory factory,
+            IFactory factory
             //IRepository repository,
-            IClaimsProvider authenticator)
+            //IClaimsProvider authenticator
+            )
         {
             this.handlerTypes = handlerTypes;
             this.factory = factory;
-            this.authenticator = authenticator;
+            //this.authenticator = authenticator;
         }
 
         public async Task<object> ExecuteAsync(IMessage message)

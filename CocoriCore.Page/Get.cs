@@ -13,7 +13,12 @@ namespace CocoriCore
         }
     }
 
-    public class Get<TGetResponse> : IGet
+    public interface IGet<TGetResponse> : IGet
+    {
+        IMessage<TGetResponse> Message { get; }
+    }
+
+    public class Get<TGetResponse> : IGet<TGetResponse>
     {
         public Get(IMessage<TGetResponse> message)
         {

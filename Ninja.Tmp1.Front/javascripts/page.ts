@@ -9,7 +9,7 @@ function fillParameterizedUrl(url: string, obj: object): string {
 abstract class Page {
     constructor() {
         document.addEventListener("DOMContentLoaded", async () => {
-            await this.fetchAndFill('/api/' + location);
+            await this.fetchAndFill('/page/' + location);
             await this.postInit();
         });
     }
@@ -35,12 +35,12 @@ abstract class Page {
         }
     }
 
-    async send<T extends object>(submit: Submit<T>, body: T) {
+    async submit<T extends object>(submit: Form<T>, body: T) {
         let url: string = fillParameterizedUrl(submit.parameterizedUrl, body);
         let fetchResponse = await fetch(url,
             {
                 headers: null,
-                method: submit.verb,
+                method: submit.method,
                 //mode: 'cors',
                 //credentials: 'include'
             });
@@ -54,8 +54,8 @@ abstract class Page {
     }
 }
 
-class Submit<T> {
-    verb: string;
+class Form<T> {
+    method: string;
     parameterizedUrl: string;
     redirectParameterizedUrl: string;
 }

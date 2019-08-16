@@ -1,4 +1,5 @@
 using System;
+using CocoriCore;
 
 namespace Ninja.Tmp1
 {

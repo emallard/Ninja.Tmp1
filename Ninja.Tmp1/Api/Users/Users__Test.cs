@@ -13,10 +13,10 @@ namespace Ninja.Tmp1
         {
             var user = CreateUser();
 
-            var inscription = await user.Display(new Users_Inscription_GET());
+            var inscription = await user.Display(new Users_Inscription_PAGE());
             // inscription.Submit(new Users_Inscription_POST());
 
-            var dashboard = await user.Display(await user.Submit(inscription.Submit, new Users_Inscription_POST()
+            var dashboard = await user.Display(await user.Submit(inscription.Form, new Users_Inscription_POST()
             {
                 Email = "aa@aa.aa",
                 Password = "azerty",
@@ -41,7 +41,7 @@ namespace Ninja.Tmp1
         public async Task MauvaisMotDePasse()
         {
             var browser = CreateUser();
-            var accueil = await browser.Display(new Accueil_GET());
+            var accueil = await browser.Display(new Accueil_PAGE());
 
             var connexion = await browser.Click(accueil.Connexion);
 
@@ -61,8 +61,8 @@ namespace Ninja.Tmp1
             var user = CreateUser();
             var emails = GetEmailReader();
 
-            var inscription = await user.Display(new Users_Inscription_GET());
-            var dashboard = await user.Display(await user.Submit(inscription.Submit, new Users_Inscription_POST()
+            var inscription = await user.Display(new Users_Inscription_PAGE());
+            var dashboard = await user.Display(await user.Submit(inscription.Form, new Users_Inscription_POST()
             {
                 Email = "aa@aa.aa",
                 Password = "azerty",
@@ -78,7 +78,7 @@ namespace Ninja.Tmp1
             });
 
             var email = (EmailMotDePasseOublie)(await emails.Read("aa@aa.aa")).Body;
-            await user.Display(new Users_SaisieNouveauMotDePasse_Token_GET() { Token = email.Token });
+            await user.Display(new Users_SaisieNouveauMotDePasse_Token_PAGE() { Token = email.Token });
         }
 
     }

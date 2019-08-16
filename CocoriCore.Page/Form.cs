@@ -1,15 +1,16 @@
 using System;
 
-namespace Ninja.Tmp1
+namespace CocoriCore
 {
-    public class Submit<TPost, TPostResponse, TRedirectGet> : ISubmit
+
+    public class Form<TPost, TPostResponse, TRedirectGet> : IForm where TRedirectGet : IPage
     {
-        public Submit(TRedirectGet redirectMessage)
+        public Form(TRedirectGet redirectMessage)
         {
             RedirectMessage = redirectMessage;
         }
 
-        public Submit(TRedirectGet redirectMessage, Action<TPostResponse, TRedirectGet> createTRedirectGet)
+        public Form(TRedirectGet redirectMessage, Action<TPostResponse, TRedirectGet> createTRedirectGet)
         {
             RedirectMessage = redirectMessage;
             CreateTRedirectGet = createTRedirectGet;
@@ -27,11 +28,5 @@ namespace Ninja.Tmp1
         {
             return RedirectMessage;
         }
-    }
-
-    public interface ISubmit
-    {
-        Type GetPostType();
-        object GetRedirectMessage();
     }
 }

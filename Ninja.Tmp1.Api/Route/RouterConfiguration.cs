@@ -16,10 +16,10 @@ namespace Ninja.Tmp1.Api
             var builder = new RouterOptionsBuilder();
 
             builder.Get<ApiFootprintQuery>().AddPath("footprint");
-            builder.Get<Accueil_GET>().SetPath("api/index");
-            builder.Get<Users_Connexion_GET>().SetPath("api/users/connexion");
-            builder.Get<Users_Inscription_GET>().SetPath("api/users/inscription");
-            builder.Get<Users_MotDePasseOublie_GET>().SetPath("api/users/mot-de-passe-oublie");
+            builder.Get<Accueil_PAGE>().SetPath("api/index");
+            builder.Get<Users_Connexion_PAGE>().SetPath("api/users/connexion");
+            builder.Get<Users_Inscription_PAGE>().SetPath("api/users/inscription");
+            builder.Get<Users_MotDePasseOublie_PAGE>().SetPath("api/users/mot-de-passe-oublie");
 
             builder.Get<Vendeur_Dashboard_GET>().SetPath("api/vendeur");
 

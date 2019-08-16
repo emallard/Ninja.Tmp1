@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CocoriCore;
 
 namespace Ninja.Tmp1
@@ -9,9 +10,9 @@ namespace Ninja.Tmp1
 
     public class Vendeur_Dashboard_GETResponse
     {
-        public MenuUtilisateur MenuUtilisateur;
-        public Link<Vendeur_Reunions_GET> Reunions;
-        public Link<Vendeur_Premium_GET> Premium;
+        public string Nom;
+        public string Prenom;
+        public DateTime DateFinPremium;
     }
 
     public class Vendeur_Dashboard_GETHandler : MessageHandler<Vendeur_Dashboard_GET, Vendeur_Dashboard_GETResponse>

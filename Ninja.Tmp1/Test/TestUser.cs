@@ -22,7 +22,7 @@ namespace Ninja.Tmp1
             return await this.browser.Display(message);
         }
 
-        public async Task<TGet> Submit<TPost, TPostResponse, TGet>(Submit<TPost, TPostResponse, TGet> submit, TPost post) where TPost : IMessage<TPostResponse>
+        public async Task<TPage> Submit<TPost, TPostResponse, TPage>(Form<TPost, TPostResponse, TPage> submit, TPost post) where TPost : IMessage<TPostResponse> where TPage : IPage
         {
             return await this.browser.Submit(submit, post);
         }
@@ -39,7 +39,7 @@ namespace Ninja.Tmp1
             this.response = response;
         }
 
-        public async Task<TGet> Submit<TPost, TGet>(ISubmit<TPost, TGet> submit, TPost post) where TGet : new() where TPost : IMessage
+        public async Task<TPage> Submit<TPost, TPage>(ISubmit<TPost, TPage> submit, TPost post) where TPage : new() where TPost : IMessage
         {
             return user.Submit(submit, post);
         }

@@ -1,13 +1,8 @@
 using CocoriCore;
 
-namespace Ninja.Tmp1
+namespace CocoriCore
 {
     public interface IMessage<TResponse> : IMessage
     {
-    }
-
-    public interface IResponse<TMessage>
-    {
-
     }
 }

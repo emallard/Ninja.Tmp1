@@ -54,7 +54,7 @@ namespace Ninja.Tmp1.Api
                 }
             });
 
-            // TODO restreindre CORS à l'nevironnement de développement
+            // TODO restreindre CORS à l'environnement de développement
             //app.UseCors(MyAllowSpecificOrigins);
 
             // else

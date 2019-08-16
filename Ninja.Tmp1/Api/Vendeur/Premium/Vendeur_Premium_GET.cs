@@ -1,3 +1,5 @@
+using CocoriCore;
+
 namespace Ninja.Tmp1
 {
     public class Vendeur_Premium_GET

@@ -1,13 +1,14 @@
 using System;
 using System.Threading.Tasks;
+using CocoriCore;
 
 namespace Ninja.Tmp1.Api
 {
-    public class AppErrorBus : IAppErrorBus
+    public class AppErrorBus : IErrorBus
     {
-        public async Task HandleException(Exception e)
+        public Task HandleAsync(Exception exception)
         {
-            await Task.CompletedTask;
+            throw new NotImplementedException();
         }
     }
 

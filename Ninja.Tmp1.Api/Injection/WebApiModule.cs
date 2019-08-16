@@ -28,8 +28,8 @@ namespace Ninja.Tmp1.Api
 
             // Middleware
             this.Bind<ApplicationMiddleware>().ToSelf();
-            this.Bind<IAppTracer>().To<AppTracer>();
-            this.Bind<IAppErrorBus>().To<AppErrorBus>();
+            //this.Bind<IAppTracer>().To<AppTracer>();
+            this.Bind<IErrorBus>().To<AppErrorBus>();
             this.Bind<IHttpErrorWriter>().To<AppHttpErrorWriter>().InSingletonScope();
             this.Bind<IHttpResponseWriter>().To<AppHttpResponseWriter>().InSingletonScope();
             //this.Bind<IUserService>().To<UserService>().InNamedScope("unitofwork");

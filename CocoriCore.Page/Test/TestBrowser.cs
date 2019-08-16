@@ -1,9 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using CocoriCore;
-using Ninject;
-using Ninject.Extensions.ContextPreservation;
-using Ninject.Extensions.NamedScope;
 
 namespace Ninja.Tmp1
 {
@@ -31,11 +28,11 @@ namespace Ninja.Tmp1
             return await this.ExecuteAsync(message);
         }
 
-        public async Task<TGet> Submit<TPost, TPostResponse, TGet>(Submit<TPost, TPostResponse, TGet> submit, TPost post) where TPost : IMessage<TPostResponse>
+        public async Task<TGet> Submit<TPost, TPostResponse, TGet>(Form<TPost, TPostResponse, TGet> form, TPost post) where TPost : IMessage<TPostResponse> where TGet : IPage
         {
             var response = await this.ExecuteAsync(post);
-            var redirect = submit.RedirectMessage;
-            submit.CreateTRedirectGet(response, redirect);
+            var redirect = form.RedirectMessage;
+            form.CreateTRedirectGet(response, redirect);
             return redirect;
         }
 

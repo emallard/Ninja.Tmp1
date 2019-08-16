@@ -3,7 +3,7 @@ using CocoriCore;
 
 namespace Ninja.Tmp1
 {
-    public abstract class MessageHandler<TQuery, TResponse> : IHandler<TQuery, TResponse>
+    public abstract class MessageHandler<TQuery, TResponse> : IHandler<TQuery, TResponse> where TQuery : IMessage<TResponse>
     {
         public async Task<object> HandleAsync(IMessage query)
         {

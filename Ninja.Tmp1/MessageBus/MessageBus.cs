@@ -41,14 +41,14 @@ namespace Ninja.Tmp1
             {
                 var userClaims = authenticator.GetClaims<UserClaims>();
             }
-
-            if (message is IProfilMessage)
-            {
-                var userClaims = authenticator.GetClaims<UserClaims>();
-                var profile = repository.Loadsync<Profile>(message.Id);
-                if (profile.IdUtilisateur != userClaims.Id)
-                    throw new AuthenticationException("");
-            }*/
+            
+                        if (message is IProfilMessage)
+                        {
+                            var userClaims = authenticator.GetClaims<UserClaims>();
+                            var profile = repository.Loadsync<Profile>(message.Id);
+                            if (profile.IdUtilisateur != userClaims.Id)
+                                throw new AuthenticationException("");
+                        }*/
 
             var response = await FindHandlerAndExecute(message);
 

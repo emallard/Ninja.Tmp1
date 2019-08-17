@@ -30,8 +30,8 @@ namespace CocoriCore
             var postRoute = routerOptions.AllRoutes.First(r => r.MessageType == submit.GetPostType());
             var redirectRoute = routerOptions.AllRoutes.First(r => r.MessageType == submit.GetRedirectMessage().GetType());
             writer.WriteStartObject();
-            writer.WritePropertyName("verb");
-            writer.WriteValue(postRoute.Method);
+            writer.WritePropertyName("method");
+            writer.WriteValue(postRoute.Method.Method);
             writer.WritePropertyName("parameterizedUrl");
             writer.WriteValue(postRoute.ParameterizedUrl);
             writer.WritePropertyName("redirectParameterizedUrl");

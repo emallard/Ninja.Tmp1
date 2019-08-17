@@ -15,12 +15,14 @@ namespace Ninja.Tmp1.Api
         {
             var builder = new RouterOptionsBuilder();
 
+            builder.Get<Users_Connexion_PAGE>().SetPath("api/page/users/connexion");
+
             builder.Get<ApiFootprintQuery>().AddPath("footprint");
             builder.Get<Accueil_PAGE>().SetPath("page/index");
 
-            builder.Get<Users_Connexion_PAGE>().SetPath("page/users/connexion");
+
             builder.Post<Users_Connexion_POST>().SetPath("api/users/inscription");
-            builder.Get<Users_Inscription_PAGE>().SetPath("page/users/inscription");
+            builder.Get<Users_Inscription_PAGE>().SetPath("api/page/users/inscription");
             builder.Post<Users_Inscription_POST>().SetPath("api/users/inscription");
 
             builder.Get<Users_MotDePasseOublie_PAGE>().SetPath("page/users/mot-de-passe-oublie");

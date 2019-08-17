@@ -51,7 +51,8 @@ namespace Ninja.Tmp1.Api
             this.Bind<JsonSerializer>().ToMethod(ctx =>
             {
                 var serializer = new JsonSerializer();
-                serializer.ContractResolver = ctx.GetContextPreservingResolutionRoot().Get<CustomResolver>();
+                serializer.Converters.Add(ctx.GetContextPreservingResolutionRoot().Get<LinkConverter>());
+                serializer.Converters.Add(ctx.GetContextPreservingResolutionRoot().Get<FormConverter>());
                 return serializer;
             }).InSingletonScope();
             this.Bind<IClock>().To<Clock>().InSingletonScope();

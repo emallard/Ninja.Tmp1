@@ -5,6 +5,8 @@ using Newtonsoft.Json;
 
 namespace CocoriCore
 {
+
+
     public class LinkConverter : JsonConverter
     {
         private readonly RouterOptions routerOptions;

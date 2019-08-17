@@ -1,3 +1,4 @@
+
 function fillParameterizedUrl(url: string, obj: object): string {
     var keys = Object.keys(obj);
     for (let k of keys) {
@@ -7,32 +8,40 @@ function fillParameterizedUrl(url: string, obj: object): string {
 }
 
 abstract class Page {
-    constructor() {
-        document.addEventListener("DOMContentLoaded", async () => {
-            await this.fetchAndFill('/page/' + location);
-            await this.postInit();
-        });
+
+    async onInit() {
+        await this.fetchAndFill(location.href.replace('#/', 'api/page/'));
+        await this.postInit();
     }
 
     abstract postInit(): void;
 
-    async fetchAndFill(url: string) {
+    async fetchAndFill(url: string): Promise<void> {
+        console.log('fetch page data : ' + url);
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
         let response = await fetch(url,
             {
-                headers: null,
+                headers: myHeaders,
                 method: "GET",
                 //mode: 'cors',
                 //credentials: 'include'
             });
 
         let txt = await response.text();
+
+        console.log('page data as text : ' + txt);
+
         if (txt.length > 0) {
             var obj = JSON.parse(txt);
             var keys = Object.keys(obj);
-            for (let k in keys) {
+            for (let k of keys) {
+                console.log('page property : ' + k);
                 this[k] = obj[k];
             }
         }
+
+        console.log(this);
     }
 
     async submit<T extends object>(submit: Form<T>, body: T) {
@@ -49,7 +58,7 @@ abstract class Page {
         if (txt.length > 0) {
             var obj = JSON.parse(txt);
             var redirect = fillParameterizedUrl(submit.redirectParameterizedUrl, obj);
-            location.href = redirect;
+            location.href = '#/' + redirect;
         }
     }
 }

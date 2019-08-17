@@ -12,8 +12,6 @@ namespace Ninja.Tmp1.Api
             var builder = new HttpResponseWriterOptionsBuilder();
             builder.For<FileResponse>().Call<HttpResponseWriterFileHandler>();
             //builder.For<IODataResponse>().Call<HttpResponseWriterODataHandler>();
-            builder.For<ILink>().Call<LinkHttpResponseWriter>();
-            builder.For<IForm>().Call<FormHttpResponseWriter>();
             builder.For<object>().Call<HttpResponseWriterDefaultHandler>();
             return builder.Options;
         }

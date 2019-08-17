@@ -73,10 +73,12 @@ namespace Ninja.Tmp1
             var accueil = await user.Click(dashboard.MenuUtilisateur.Deconnexion);
             var connexion = await user.Click(accueil.Connexion);
             var motDePasseOublie = await user.Click(connexion.MotDePasseOublie);
-            await user.Submit(motDePasseOublie.Submit, new Users_MotDePasseOublie_POST()
+            var confirmation = await user.Display(await user.Submit(motDePasseOublie.Form, new Users_MotDePasseOublie_POST()
             {
                 Email = new Email { Value = "aa@aa.aa" }
-            });
+            }));
+
+            confirmation.Should().NotBeNull();
 
             var email = (EmailMotDePasseOublie)(await emails.Read("aa@aa.aa")).Body;
             await user.Display(new Users_SaisieNouveauMotDePasse_Token_PAGE() { Token = email.Token });

@@ -11,6 +11,14 @@ abstract class Users_Connexion_Page extends Page {
     Form: Form<Users_Connexion_Post>;
 }
 
+class Users_MotDePasseOublie_Post {
+    Email: string;
+}
+
+abstract class Users_MotDePasseOublie_Page extends Page {
+    Form: Form<Users_MotDePasseOublie_Post>;
+}
+
 // END OF GENERATED CODE
 
 

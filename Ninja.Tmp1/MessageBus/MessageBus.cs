@@ -9,7 +9,7 @@ namespace Ninja.Tmp1
     {
         private readonly HandlerFinder handlerTypes;
         private readonly IFactory factory;
-        private readonly IClaimsProvider authenticator;
+
         //private readonly IRepository repository;
 
         public MessageBus(

@@ -14,15 +14,15 @@ namespace CocoriCore.LeBonCoin
 
     public class Vendeur_Annonces_PAGEResponse
     {
-        public List<ReunionItem> Reunions;
-        public Link<Vendeur_NouvelleAnnonce_PAGE> NouvelleReunion = Link.New(new Vendeur_NouvelleAnnonce_PAGE());
+        public List<AnnonceItem> Reunions;
+        public Vendeur_NouvelleAnnonce_PAGE NouvelleReunion = new Vendeur_NouvelleAnnonce_PAGE();
 
 
-        public class ReunionItem
+        public class AnnonceItem
         {
             public Guid Id;
 
-            public ILink<Vendeur_Annonces_Id_PAGE> LinkReunion => Link.New(new Vendeur_Annonces_Id_PAGE { Id = this.Id });
+            public Vendeur_Annonces_Id_PAGE Lien = new Vendeur_Annonces_Id_PAGE();
         }
     }
 }

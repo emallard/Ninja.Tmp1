@@ -12,8 +12,8 @@ namespace CocoriCore.LeBonCoin
     {
         public string Nom;
         public string Prenom;
-        public Link<Vendeur_NouvelleAnnonce_PAGE> NouvelleAnnonce = Link.New(new Vendeur_NouvelleAnnonce_PAGE());
-        public Link<Vendeur_Annonces_PAGE> Reunions = Link.New(new Vendeur_Annonces_PAGE());
+        public Vendeur_NouvelleAnnonce_PAGE NouvelleAnnonce = new Vendeur_NouvelleAnnonce_PAGE();
+        public Vendeur_Annonces_PAGE Reunions = new Vendeur_Annonces_PAGE();
         public MenuUtilisateur MenuUtilisateur = new MenuUtilisateur();
     }
 

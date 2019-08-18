@@ -15,7 +15,7 @@ namespace CocoriCore.LeBonCoin
 
     public class Annonces_POSTResponse
     {
-        public ILink<Annonces_PAGE> Redirect;
+        public Annonces_PAGE Redirect;
     }
 
 
@@ -31,11 +31,11 @@ namespace CocoriCore.LeBonCoin
             await Task.CompletedTask;
             return new Annonces_POSTResponse()
             {
-                Redirect = Link.New(new Annonces_PAGE()
+                Redirect = new Annonces_PAGE()
                 {
                     Ville = command.Ville,
                     Categorie = command.Categorie
-                })
+                }
             };
         }
     }

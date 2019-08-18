@@ -13,7 +13,7 @@ namespace CocoriCore.LeBonCoin
 
     public class Users_Connexion_PAGEResponse
     {
-        public Link<Users_MotDePasseOublie_PAGE> MotDePasseOublie;
+        public Users_MotDePasseOublie_PAGE MotDePasseOublie = new Users_MotDePasseOublie_PAGE();
         public Form<Users_Connexion_POST, Users_Connexion_POSTResponse> Form = new Form<Users_Connexion_POST, Users_Connexion_POSTResponse>();
     }
 
@@ -27,7 +27,6 @@ namespace CocoriCore.LeBonCoin
         {
             await Task.CompletedTask;
             var response = new Users_Connexion_PAGEResponse();
-            response.MotDePasseOublie = Link.New(new Users_MotDePasseOublie_PAGE());
             return response;
         }
 

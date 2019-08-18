@@ -12,7 +12,7 @@ namespace CocoriCore.LeBonCoin
         public string Ville;
         public string Categorie;
         public string Text;
-        public Link<Annonces_Id_PAGE> Lien;
+        public Annonces_Id_PAGE Lien;
     }
 
     public class Annonces_PAGE : IPage<Annonces_PAGEResponse>, IQuery
@@ -38,7 +38,10 @@ namespace CocoriCore.LeBonCoin
         public override async Task<Annonces_PAGEResponse> ExecuteAsync(Annonces_PAGE query)
         {
             await Task.CompletedTask;
-            var response = new Annonces_PAGEResponse();
+            var response = new Annonces_PAGEResponse()
+            {
+                Items = new Annonces_PAGEItem[0]
+            };
             return response;
         }
 

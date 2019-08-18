@@ -9,8 +9,8 @@ namespace CocoriCore.LeBonCoin
 
     public class Accueil_PAGEResponse
     {
-        public Link<Users_Connexion_PAGE> Connexion = Link.New(new Users_Connexion_PAGE());
-        public Link<Users_Inscription_PAGE> Inscription = Link.New(new Users_Inscription_PAGE());
+        public Users_Connexion_PAGE Connexion = new Users_Connexion_PAGE();
+        public Users_Inscription_PAGE Inscription = new Users_Inscription_PAGE();
         public Form<Annonces_POST, Annonces_POSTResponse> Form;
         public Form<Villes_GET, Villes_GETResponse> RechercheVille;
         public string[] Categories;

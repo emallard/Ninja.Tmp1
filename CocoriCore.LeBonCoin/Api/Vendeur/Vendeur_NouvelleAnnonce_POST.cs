@@ -13,7 +13,7 @@ namespace CocoriCore.LeBonCoin
 
     public class Vendeur_NouvelleAnnonce_POSTResponse
     {
-        public Link<Vendeur_Annonces_Id_GET> Redirect;
+        public Vendeur_Annonces_Id_PAGE Redirect;
     }
 
     public class Vendeur_NouvelleAnnonce_POSTHandler : MessageHandler<Vendeur_NouvelleAnnonce_POST, Vendeur_NouvelleAnnonce_POSTResponse>
@@ -24,10 +24,7 @@ namespace CocoriCore.LeBonCoin
             var id = Guid.NewGuid();
             return new Vendeur_NouvelleAnnonce_POSTResponse()
             {
-                Redirect = Link.New(new Vendeur_Annonces_Id_GET()
-                {
-                    Id = id
-                })
+                Redirect = new Vendeur_Annonces_Id_PAGE { Id = id }
             };
         }
     }

@@ -55,7 +55,7 @@ namespace CocoriCore.LeBonCoin
             TestBrowser browser = null;
             var accueil = await browser.Display(new Accueil_PAGE());
 
-            var connexion = await browser.Click(accueil.Connexion);
+            var connexion = await browser.Display(accueil.Connexion);
 
             Func<Task> a = async () => await browser
                 .GetForm(connexion.Form)

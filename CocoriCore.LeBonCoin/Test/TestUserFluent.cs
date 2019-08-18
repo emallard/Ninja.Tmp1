@@ -18,9 +18,9 @@ namespace CocoriCore.LeBonCoin
 
 
 
-        public async Task<TestUserFluent<T>> Click<T>(Func<TPage, ILink<IMessage<T>>> a)
+        public async Task<TestUserFluent<T>> Click<T>(Func<TPage, IMessage<T>> a)
         {
-            var nextPage = await this.browser.Click(a(Page));
+            var nextPage = await this.browser.Display(a(Page));
             return new TestUserFluent<T>(browser, nextPage);
         }
 
@@ -56,9 +56,9 @@ namespace CocoriCore.LeBonCoin
             this.browserForm = browserForm;
         }
 
-        public async Task<TestUserFluent<T>> Follow<T>(TPost post, Func<TPostResponse, ILink<IMessage<T>>> getLink)
+        public async Task<TestUserFluent<T>> Follow<T>(TPost post, Func<TPostResponse, IMessage<T>> getMessage)
         {
-            var page = await this.browserForm.Follow(post, getLink);
+            var page = await this.browserForm.Follow(post, getMessage);
             return new TestUserFluent<T>(this.browserForm.testBrowser, page);
         }
     }

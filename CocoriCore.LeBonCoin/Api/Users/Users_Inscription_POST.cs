@@ -19,7 +19,7 @@ namespace CocoriCore.LeBonCoin
     {
         public string jwt;
 
-        public Link<Vendeur_Dashboard_PAGE> Redirect;
+        public Vendeur_Dashboard_PAGE Redirect;
     }
 
     public class Users_Inscription_POSTHandler : MessageHandler<Users_Inscription_POST, Users_Inscription_POSTResponse>
@@ -30,7 +30,7 @@ namespace CocoriCore.LeBonCoin
             return new Users_Inscription_POSTResponse()
             {
                 jwt = "jwt",
-                Redirect = Link.New(new Vendeur_Dashboard_PAGE())
+                Redirect = new Vendeur_Dashboard_PAGE()
             };
         }
     }

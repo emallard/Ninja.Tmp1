@@ -15,11 +15,6 @@ namespace CocoriCore.Page
             this.unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public async Task<T> Click<T>(ILink<IMessage<T>> a)
-        {
-            return await this.ExecuteAsync(a.Message);
-        }
-
         public async Task<T> Display<T>(IMessage<T> message)
         {
             return await this.ExecuteAsync(message);
@@ -62,11 +57,11 @@ namespace CocoriCore.Page
             return await this.testBrowser.ExecuteAsync(post);
         }
 
-        public async Task<T> Follow<T>(TPost post, Func<TPostResponse, ILink<IMessage<T>>> getLink)
+        public async Task<T> Follow<T>(TPost post, Func<TPostResponse, IMessage<T>> getMessage)
         {
             var postResponse = await this.testBrowser.ExecuteAsync(post);
-            var link = getLink(postResponse);
-            return await testBrowser.ExecuteAsync(link.Message);
+            var message = getMessage(postResponse);
+            return await testBrowser.ExecuteAsync(message);
         }
     }
 }

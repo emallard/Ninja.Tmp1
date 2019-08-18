@@ -81,7 +81,7 @@ namespace CocoriCore.Page
             var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
 
             return fields
-                .Where(f => !f.GetMemberType().IsAssignableTo(typeof(ILink))
+                .Where(f => !f.GetMemberType().IsAssignableTo(typeof(IPage))
                         && !f.GetMemberType().IsAssignableTo(typeof(IForm))
                         && !f.GetMemberType().IsAssignableTo(typeof(IGet))
                         )
@@ -93,7 +93,7 @@ namespace CocoriCore.Page
             var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
 
             return fields
-                .Where(f => f.GetMemberType().IsAssignableTo(typeof(ILink)))
+                .Where(f => f.GetMemberType().IsAssignableTo(typeof(IPage)))
                 .Select(l => new LinkMemberInfo() { Name = l.Name })
                 .ToList();
         }

@@ -13,11 +13,6 @@ namespace CocoriCore.LeBonCoin
             this.browser = browser;
         }
 
-        public async Task<T> Click<T>(ILink<IMessage<T>> a)
-        {
-            return await this.browser.Click(a);
-        }
-
         public async Task<T> Display<T>(IMessage<T> message)
         {
             return await this.browser.Display(message);

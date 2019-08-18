@@ -1,17 +1,20 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CocoriCore;
 
 namespace CocoriCore.LeBonCoin
 {
-    public class Vendeur_Dashboard_PAGE : IPage<Vendeur_Dashboard_PAGEResponse>, IQuery
+    public class Vendeur_Dashboard_PAGE : IMessage<Vendeur_Dashboard_PAGEResponse>, IQuery
     {
     }
 
     public class Vendeur_Dashboard_PAGEResponse
     {
-        public Get<Vendeur_Dashboard_GETResponse> Data = Get.New(new Vendeur_Dashboard_GET());
-        public MenuUtilisateur MenuUtilisateur;
-        public Link<Vendeur_Annonces_GET> Reunions;
+        public string Nom;
+        public string Prenom;
+        public Link<Vendeur_NouvelleAnnonce_PAGE> NouvelleAnnonce = Link.New(new Vendeur_NouvelleAnnonce_PAGE());
+        public Link<Vendeur_Annonces_PAGE> Reunions = Link.New(new Vendeur_Annonces_PAGE());
+        public MenuUtilisateur MenuUtilisateur = new MenuUtilisateur();
     }
 
     public class Vendeur_Dashboard_PAGEHandler : MessageHandler<Vendeur_Dashboard_PAGE, Vendeur_Dashboard_PAGEResponse>
@@ -21,7 +24,8 @@ namespace CocoriCore.LeBonCoin
             await Task.CompletedTask;
             return new Vendeur_Dashboard_PAGEResponse()
             {
-                MenuUtilisateur = new MenuUtilisateur()
+                Nom = "Dupont",
+                Prenom = "Jean"
             };
         }
     }

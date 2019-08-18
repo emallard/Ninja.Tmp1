@@ -1,4 +1,9 @@
 
+class Form<T, R> {
+    method: string;
+    parameterizedUrl: string;
+}
+
 function fillParameterizedUrl(url: string, obj: object): string {
     var keys = Object.keys(obj);
     for (let k of keys) {
@@ -46,7 +51,7 @@ abstract class Page {
         console.log(this);
     }
 
-    async submit<T extends object>(submit: Form<T>, body: T) {
+    async submit<T extends object, R extends object>(submit: Form<T, R>, body: T): Promise<R> {
         let url: string = fillParameterizedUrl(submit.parameterizedUrl, body);
         let fetchResponse = await fetch(url,
             {
@@ -59,14 +64,8 @@ abstract class Page {
         let txt = await fetchResponse.text();
         if (txt.length > 0) {
             var obj = JSON.parse(txt);
-            var redirect = fillParameterizedUrl(submit.redirectParameterizedUrl, obj);
-            location.href = '#/' + redirect;
+            return obj;
         }
     }
 }
 
-class Form<T> {
-    method: string;
-    parameterizedUrl: string;
-    redirectParameterizedUrl: string;
-}

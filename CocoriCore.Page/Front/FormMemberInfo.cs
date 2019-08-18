@@ -6,5 +6,6 @@ namespace CocoriCore.Page
     {
         public string Name;
         public Type MessageType;
+        public Type ResponseType;
     }
 }

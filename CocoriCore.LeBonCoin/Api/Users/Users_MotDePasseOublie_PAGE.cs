@@ -11,8 +11,7 @@ namespace CocoriCore.LeBonCoin
 
     public class Users_MotDePasseOublie_PAGEResponse
     {
-        public Form<Users_MotDePasseOublie_POST, Users_MotDePasseOublie_POSTResponse, Users_MotDePasseOublie_Confirmation_PAGE> Form;
-        public Form2<Users_MotDePasseOublie_POST, Users_MotDePasseOublie_POSTResponse> Form2;
+        public Form<Users_MotDePasseOublie_POST, Users_MotDePasseOublie_POSTResponse> Form = new Form<Users_MotDePasseOublie_POST, Users_MotDePasseOublie_POSTResponse>();
     }
 
     public class Users_MotDePasseOublie_PAGEHandler : MessageHandler<Users_MotDePasseOublie_PAGE, Users_MotDePasseOublie_PAGEResponse>
@@ -20,12 +19,7 @@ namespace CocoriCore.LeBonCoin
         public override async Task<Users_MotDePasseOublie_PAGEResponse> ExecuteAsync(Users_MotDePasseOublie_PAGE query)
         {
             await Task.CompletedTask;
-            return new Users_MotDePasseOublie_PAGEResponse()
-            {
-                Form = new Form<Users_MotDePasseOublie_POST, Users_MotDePasseOublie_POSTResponse, Users_MotDePasseOublie_Confirmation_PAGE>(
-                    new Users_MotDePasseOublie_Confirmation_PAGE()
-                )
-            };
+            return new Users_MotDePasseOublie_PAGEResponse();
         }
     }
 

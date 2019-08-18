@@ -12,6 +12,6 @@ namespace CocoriCore.LeBonCoin
     {
         public List<string> Categories;
 
-        public Form<Vendeur_NouvelleAnnonce_POST, Vendeur_NouvelleAnnonce_POSTResponse, Vendeur_Annonces_PAGE> Submit;
+        public Form<Vendeur_NouvelleAnnonce_POST, Vendeur_NouvelleAnnonce_POSTResponse> Form;
     }
 }

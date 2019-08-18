@@ -29,7 +29,7 @@ namespace CocoriCore.LeBonCoin
             return await this.browser.Submit(submit, post);
         }*/
 
-        public BrowserForm<TPost, TPostResponse> GetForm<TPost, TPostResponse>(Form2<TPost, TPostResponse> form) where TPost : IMessage<TPostResponse>
+        public BrowserForm<TPost, TPostResponse> GetForm<TPost, TPostResponse>(Form<TPost, TPostResponse> form) where TPost : IMessage<TPostResponse>
         {
             return this.browser.GetForm(form);
         }

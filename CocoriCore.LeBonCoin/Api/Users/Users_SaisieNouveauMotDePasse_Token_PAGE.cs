@@ -11,7 +11,7 @@ namespace CocoriCore.LeBonCoin
 
     public class Users_SaisieNouveauMotDePasse_Token_PAGEResponse
     {
-        public Form<Users_SaisieNouveauMotDePasse_Token_POST, Void, Users_SaisieNouveauMotDePasse_Token_PAGE> Form;
+        public Form<Users_SaisieNouveauMotDePasse_Token_POST, Void> Form = new Form<Users_SaisieNouveauMotDePasse_Token_POST, Void>();
     }
 
 }

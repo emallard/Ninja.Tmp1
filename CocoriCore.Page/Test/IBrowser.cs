@@ -10,6 +10,5 @@ namespace CocoriCore.Page
 
         Task<T> Display<T>(IMessage<T> message);
 
-        Task<TPage> Submit<TPost, TPostResponse, TPage>(Form<TPost, TPostResponse, TPage> form, TPost post) where TPost : IMessage<TPostResponse> where TPage : IPage;
     }
 }

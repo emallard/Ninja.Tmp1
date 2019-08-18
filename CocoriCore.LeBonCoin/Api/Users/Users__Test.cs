@@ -15,7 +15,7 @@ namespace CocoriCore.LeBonCoin
             var user = CreateUserFluent();
 
             var dashboard = user.Display(new Users_Inscription_PAGE())
-                .Result.GetForm(p => p.Form2)
+                .Result.GetForm(p => p.Form)
                         .Follow(new Users_Inscription_POST()
                         {
                             Email = "aa@aa.aa",
@@ -109,7 +109,7 @@ namespace CocoriCore.LeBonCoin
             var emails = GetEmailReader();
 
             var confirmation = user.Display(new Users_Inscription_PAGE())
-                .Result.GetForm(p => p.Form2)
+                .Result.GetForm(p => p.Form)
                         .Follow(new Users_Inscription_POST()
                         {
                             Email = "aa@aa.aa",
@@ -119,7 +119,7 @@ namespace CocoriCore.LeBonCoin
                 .Result.Click(p => p.MenuUtilisateur.Deconnexion)
                 .Result.Click(p => p.Connexion)
                 .Result.Click(p => p.MotDePasseOublie)
-                .Result.GetForm(p => p.Form2)
+                .Result.GetForm(p => p.Form)
                         .Follow(new Users_MotDePasseOublie_POST()
                         {
                             Email = new Email { Value = "aa@aa.aa" }

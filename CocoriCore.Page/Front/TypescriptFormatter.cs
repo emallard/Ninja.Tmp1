@@ -32,7 +32,7 @@ namespace CocoriCore.Page
                 r += $"  {m.Name}: string;\n";
 
             foreach (var m in type.FormMemberInfos)
-                r += $"  {m.Name}: Form<{m.MessageType.Name}>;\n";
+                r += $"  {m.Name}: Form<{m.MessageType.Name}, {m.ResponseType.Name}>;\n";
 
             r += "}\n\n";
             return r;

@@ -25,14 +25,6 @@ namespace CocoriCore.Page
             return await this.ExecuteAsync(message);
         }
 
-        public async Task<TGet> Submit<TPost, TPostResponse, TGet>(Form<TPost, TPostResponse, TGet> form, TPost post) where TPost : IMessage<TPostResponse> where TGet : IPage
-        {
-            var response = await this.ExecuteAsync(post);
-            var redirect = form.RedirectMessage;
-            form.FillRedirect(response, redirect);
-            return redirect;
-        }
-
         public async Task<T> ExecuteAsync<T>(IMessage<T> message)
         {
             return (T)(await this.ExecuteAsync((IMessage)message));
@@ -48,7 +40,7 @@ namespace CocoriCore.Page
             }
         }
 
-        public BrowserForm<TPost, TPostResponse> GetForm<TPost, TPostResponse>(Form2<TPost, TPostResponse> form) where TPost : IMessage<TPostResponse>
+        public BrowserForm<TPost, TPostResponse> GetForm<TPost, TPostResponse>(Form<TPost, TPostResponse> form) where TPost : IMessage<TPostResponse>
         {
             return new BrowserForm<TPost, TPostResponse>(this, form);
         }
@@ -57,9 +49,9 @@ namespace CocoriCore.Page
     public class BrowserForm<TPost, TPostResponse> where TPost : IMessage<TPostResponse>
     {
         public readonly TestBrowser testBrowser;
-        private readonly Form2<TPost, TPostResponse> form;
+        private readonly Form<TPost, TPostResponse> form;
 
-        public BrowserForm(TestBrowser testBrowser, Form2<TPost, TPostResponse> form)
+        public BrowserForm(TestBrowser testBrowser, Form<TPost, TPostResponse> form)
         {
             this.testBrowser = testBrowser;
             this.form = form;

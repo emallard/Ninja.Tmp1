@@ -46,7 +46,8 @@ namespace CocoriCore.Page
         public IEnumerable<FrontTypeInfo> GetNeededTypeInfos(FrontTypeInfo pageTypeInfo)
         {
             var neededTypes = pageTypeInfo.FormMemberInfos
-                                .Select(f => f.MessageType)
+                                .SelectMany(f => new Type[] { f.MessageType, f.ResponseType })
+                                .Distinct()
                                 .ToList();
 
             return neededTypes.Select(type => new FrontTypeInfo()
@@ -109,10 +110,15 @@ namespace CocoriCore.Page
 
             return fields
                 .Where(f => f.GetMemberType().IsAssignableTo(typeof(IForm)))
-                .Select(f => new FormMemberInfo
+                .Select(f =>
                 {
-                    Name = f.Name,
-                    MessageType = f.GetMemberType().GetGenericArguments(typeof(Form<,,>))[0]
+                    var generics = f.GetMemberType().GetGenericArguments(typeof(Form<,>));
+                    return new FormMemberInfo
+                    {
+                        Name = f.Name,
+                        MessageType = generics[0],
+                        ResponseType = generics[1]
+                    };
                 })
                 .ToList();
         }

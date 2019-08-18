@@ -26,16 +26,13 @@ namespace CocoriCore
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var submit = (IForm)value;
-            var postRoute = routerOptions.AllRoutes.First(r => r.MessageType == submit.GetPostType());
-            var redirectRoute = routerOptions.AllRoutes.First(r => r.MessageType == submit.GetRedirectMessage().GetType());
+            var form = (IForm)value;
+            var postRoute = routerOptions.AllRoutes.First(r => r.MessageType == form.GetPostType());
             writer.WriteStartObject();
             writer.WritePropertyName("method");
             writer.WriteValue(postRoute.Method.Method);
             writer.WritePropertyName("parameterizedUrl");
             writer.WriteValue(postRoute.ParameterizedUrl);
-            writer.WritePropertyName("redirectParameterizedUrl");
-            writer.WriteValue(redirectRoute.ParameterizedUrl);
             writer.WriteEndObject();
         }
     }

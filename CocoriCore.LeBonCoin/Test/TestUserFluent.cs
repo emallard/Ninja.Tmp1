@@ -40,7 +40,7 @@ namespace CocoriCore.LeBonCoin
         }*/
 
         public TestUserFluentBrowerForm<TPost, TPostResponse> GetForm<TPost, TPostResponse>(
-            Func<TPage, Form2<TPost, TPostResponse>> form)
+            Func<TPage, Form<TPost, TPostResponse>> form)
             where TPost : IMessage<TPostResponse>
         {
             return new TestUserFluentBrowerForm<TPost, TPostResponse>(this.browser.GetForm(form(Page)));

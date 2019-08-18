@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Ninja.Tmp1.Api/Ninja.Tmp1.Api.csproj",
+                "${workspaceFolder}/CocoriCore.LeBonCoin.Api/CocoriCore.LeBonCoin.Api.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/Ninja.Tmp1.Api/Ninja.Tmp1.Api.csproj",
+                "${workspaceFolder}/CocoriCore.LeBonCoin.Api/CocoriCore.LeBonCoin.Api.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,7 +32,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/Ninja.Tmp1.Api/Ninja.Tmp1.Api.csproj",
+                "${workspaceFolder}/CocoriCore.LeBonCoin.Api/CocoriCore.LeBonCoin.Api.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

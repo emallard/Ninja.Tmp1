@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using CocoriCore;
 
-namespace Ninja.Tmp1
+namespace CocoriCore.Page
 {
     public interface IBrowser
     {

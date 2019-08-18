@@ -13,7 +13,6 @@ namespace CocoriCore.LeBonCoin
     public class Vendeur_Annonces_Id_PAGEResponse
     {
         public Guid Id;
-        public DateTime Date;
         public string Ville;
         public string Categorie;
 

@@ -14,7 +14,7 @@ namespace CocoriCore.LeBonCoin
 
     public class Vendeur_Annonces_PAGEResponse
     {
-        public List<AnnonceItem> Reunions;
+        public AnnonceItem[] Reunions;
         public Vendeur_NouvelleAnnonce_PAGE NouvelleReunion = new Vendeur_NouvelleAnnonce_PAGE();
 
 

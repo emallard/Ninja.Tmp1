@@ -22,7 +22,7 @@ namespace CocoriCore
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            throw new Exception("ILink Not supposed to be deserialized");
+            throw new Exception("IPage Not supposed to be deserialized");
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

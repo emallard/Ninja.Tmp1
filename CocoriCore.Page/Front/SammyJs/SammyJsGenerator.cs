@@ -72,9 +72,13 @@ namespace CocoriCore.Page
 
             Console.WriteLine("pages : \n" + string.Join("", pageTypeInfos.Select(x => $"  - {x.Name} \n")));
 
-            var formattedNeededTypes = pageTypeInfos
-                .SelectMany(p => pageInspector.GetNeededTypeInfos(p))
-                .Select(p => typescriptFormatter.FormatType(p))
+            var neededTypes = pageTypeInfos
+                .SelectMany(p => pageInspector.GetNeededTypes(p))
+                .Distinct()
+                .ToArray();
+
+            var formattedNeededTypes = neededTypes
+                .Select(p => typescriptFormatter.FormatType(pageInspector.GetTypeInfo(p)))
                 .ToArray();
 
             return string.Join("", formattedNeededTypes)

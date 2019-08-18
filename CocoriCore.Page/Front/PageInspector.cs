@@ -44,9 +44,9 @@ namespace CocoriCore.Page
             return typeInfo;
         }
 
-        public IEnumerable<FrontTypeInfo> GetNeededTypeInfos(FrontTypeInfo pageTypeInfo)
+        public IEnumerable<Type> GetNeededTypes(FrontTypeInfo pageTypeInfo)
         {
-            var neededTypes = pageTypeInfo.FormMemberInfos
+            return pageTypeInfo.FormMemberInfos
                                 .SelectMany(f => new Type[] { f.MessageType, f.ResponseType })
                                 .Concat(pageTypeInfo.FieldInfos
                                     .Where(f => f.FieldType != typeof(string))
@@ -56,13 +56,19 @@ namespace CocoriCore.Page
                                 .Distinct()
                                 .ToList();
 
-            return neededTypes.Select(type => new FrontTypeInfo()
+        }
+        public FrontTypeInfo GetTypeInfo(Type type)
+        {
+            var isPage = type.IsAssignableTo(typeof(IPage));
+            return new FrontTypeInfo()
             {
                 Name = type.Name,
-                IsPage = false,
+                IsPage = isPage,
+                PageUrl = !isPage ? null : GetPageParameterizedUrl(type),
                 FieldInfos = GetFields(type),
-                LinkMemberInfos = GetLinks(type)
-            });
+                LinkMemberInfos = GetLinks(type),
+                FormMemberInfos = GetForms(type)
+            };
         }
 
         public string GetPageParameterizedUrl(Type pageType)
@@ -76,7 +82,7 @@ namespace CocoriCore.Page
             return pageType.GetGenericArguments(typeof(IPage<>))[0];
         }
 
-        public List<FieldInfo> GetFields(Type type)
+        public FieldInfo[] GetFields(Type type)
         {
             var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
 
@@ -85,20 +91,20 @@ namespace CocoriCore.Page
                         && !f.GetMemberType().IsAssignableTo(typeof(IForm))
                         && !f.GetMemberType().IsAssignableTo(typeof(IGet))
                         )
-                .ToList();
+                .ToArray();
         }
 
-        public List<LinkMemberInfo> GetLinks(Type type)
+        public LinkMemberInfo[] GetLinks(Type type)
         {
             var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
 
             return fields
                 .Where(f => f.GetMemberType().IsAssignableTo(typeof(IPage)))
                 .Select(l => new LinkMemberInfo() { Name = l.Name })
-                .ToList();
+                .ToArray();
         }
 
-        public List<FormMemberInfo> GetForms(Type type)
+        public FormMemberInfo[] GetForms(Type type)
         {
             var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
 
@@ -114,7 +120,7 @@ namespace CocoriCore.Page
                         ResponseType = generics[1]
                     };
                 })
-                .ToList();
+                .ToArray();
         }
     }
 }

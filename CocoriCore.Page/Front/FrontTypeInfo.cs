@@ -6,10 +6,10 @@ namespace CocoriCore.Page
     public class FrontTypeInfo
     {
         public string Name;
-        public List<FieldInfo> FieldInfos;
+        public FieldInfo[] FieldInfos;
         public bool IsPage;
         public string PageUrl;
-        public List<LinkMemberInfo> LinkMemberInfos;
-        public List<FormMemberInfo> FormMemberInfos;
+        public LinkMemberInfo[] LinkMemberInfos;
+        public FormMemberInfo[] FormMemberInfos;
     }
 }

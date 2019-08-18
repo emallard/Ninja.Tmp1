@@ -14,10 +14,10 @@ function fillParameterizedUrl(url: string, obj: object): string {
 
 abstract class Page {
 
-    abstract pageUrl: string;
+    abstract PageUrl: string;
 
     async onInit() {
-        await this.fetchAndFill(this.pageUrl);
+        await this.fetchAndFill(this.PageUrl);
         await this.postInit();
     }
 
@@ -53,9 +53,11 @@ abstract class Page {
 
     async submit<T extends object, R extends object>(submit: Form<T, R>, body: T): Promise<R> {
         let url: string = fillParameterizedUrl(submit.parameterizedUrl, body);
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
         let fetchResponse = await fetch(url,
             {
-                headers: null,
+                headers: myHeaders,
                 method: submit.method,
                 //mode: 'cors',
                 //credentials: 'include'
@@ -64,6 +66,8 @@ abstract class Page {
         let txt = await fetchResponse.text();
         if (txt.length > 0) {
             var obj = JSON.parse(txt);
+            if (obj.Redirect != undefined)
+                location.href = "#/" + obj.Redirect;
             return obj;
         }
     }

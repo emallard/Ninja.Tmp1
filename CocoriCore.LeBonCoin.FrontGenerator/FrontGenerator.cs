@@ -17,7 +17,7 @@ namespace CocoriCore.LeBonCoin.FrontGenerator
             var generator = new SammyJsGenerator(
                 new SammyJsGeneratorOptions()
                 {
-                    OutputPath = "TestGen"
+                    OutputPath = "../../../../CocoriCore.LeBonCoin.Front"
                 },
                 new PageInspector(CocoriCore.LeBonCoin.Api.RouterConfiguration.Options()),
                 new TypescriptFormatter());

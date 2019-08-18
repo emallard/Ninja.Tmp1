@@ -31,8 +31,9 @@ namespace CocoriCore.Page
         {
             // copy cocoricore.page.fetch.ts
 
-            if (!Directory.Exists(System.IO.Path.Combine(options.OutputPath, "javascripts")))
-                Directory.CreateDirectory(System.IO.Path.Combine(options.OutputPath, "javascripts"));
+            var javascriptDirectory = System.IO.Path.Combine(options.OutputPath, "javascripts");
+            if (!Directory.Exists(javascriptDirectory))
+                Directory.CreateDirectory(javascriptDirectory);
 
             File.WriteAllText(
                 System.IO.Path.Combine(options.OutputPath, "javascripts", "pages.ts"),
@@ -41,6 +42,22 @@ namespace CocoriCore.Page
             File.WriteAllText(
                 System.IO.Path.Combine(options.OutputPath, "javascripts", "routes.js"),
                 GenerateRoutesJs());
+
+            Console.WriteLine("templates :");
+            var templates = GenerateTemplates();
+            foreach (var t in templates)
+            {
+                Console.WriteLine("  - " + t.Path);
+                var filename = System.IO.Path.Combine(options.OutputPath, t.Path);
+                if (!File.Exists(filename))
+                {
+                    var directory = System.IO.Path.GetDirectoryName(filename);
+                    if (!Directory.Exists(directory))
+                        Directory.CreateDirectory(directory);
+
+                    File.WriteAllText(filename, t.Text);
+                }
+            }
         }
 
         private string GeneratePagesTs()
@@ -71,8 +88,9 @@ namespace CocoriCore.Page
             var routesAndNames = pageInspector.GetPageTypeInfos()
                         .Select(x => new
                         {
-                            Route = x.PageUrl.Replace("/api/page", ""),
-                            Name = x.Name
+                            Route = x.PageUrl.Replace("/api", ""),
+                            Name = x.Name,
+                            TemplateUrl = GetTemplateFilenameWithoutExtension(x) + ".html"
                         })
                         .ToArray();
 
@@ -83,19 +101,53 @@ namespace CocoriCore.Page
                 + string.Join("",
                     routesAndNames
                         .Select(x =>
-                            "app.addPage(\"" + x.Route + "\", " + x.Name + ");\n"
+                            $"app.addPage(\"{x.Route}\", {x.Name}Component, \"{x.TemplateUrl}\");\n"
                         ))
                 + "}";
         }
-        /*
-                private IEnumerable<PathAndText> GenerateTemplates()
-                {
-                    var pageTypeInfos = pageInspector
-                    .GetPageTypeInfos()
-                    .Select(x => x.PageUrl);
 
-                }
-        */
+        private IEnumerable<PathAndText> GenerateTemplates()
+        {
+            return pageInspector
+            .GetPageTypeInfos()
+            .SelectMany(x =>
+            {
+                var path = GetTemplateFilenameWithoutExtension(x);
+
+                return new PathAndText[]{
+                    new PathAndText()
+                    {
+                        Path = path + ".html",
+                        Text = ""
+                    },
+                    new PathAndText()
+                    {
+                        Path = path + ".ts",
+                        Text = $"class {x.Name}Component extends {x.Name} " + "{\n"
++ @"
+    constructor() {
+        super();
+    }
+
+    async postInit() {
+    }
+}
+"
+                    }
+                };
+            })
+            .ToArray();
+        }
+
+        private string GetTemplateFilenameWithoutExtension(FrontTypeInfo typeInfo)
+        {
+            if (typeInfo.Name.StartsWith("Users"))
+                return System.IO.Path.Combine("templates", "users", typeInfo.Name + "Component");
+            if (typeInfo.Name.StartsWith("Vendeur"))
+                return System.IO.Path.Combine("templates", "vendeur", typeInfo.Name + "Component");
+            return System.IO.Path.Combine("templates", typeInfo.Name + "Component");
+        }
+
     }
 
 }

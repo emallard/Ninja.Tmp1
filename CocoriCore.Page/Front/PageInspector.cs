@@ -31,15 +31,16 @@ namespace CocoriCore.Page
                     .ToList();
         }
 
-        public FrontTypeInfo GetPageTypeInfo(Type type)
+        public FrontTypeInfo GetPageTypeInfo(Type pageType)
         {
+            var pageResponseType = GetPageResponseType(pageType);
             var typeInfo = new FrontTypeInfo();
-            typeInfo.Name = type.Name;
+            typeInfo.Name = pageType.Name;
             typeInfo.IsPage = true;
-            typeInfo.PageUrl = GetPageParameterizedUrl(type);
-            typeInfo.FieldInfos = GetPageFields(type);
-            typeInfo.LinkMemberInfos = GetPageLinks(type);
-            typeInfo.FormMemberInfos = GetPageForms(type);
+            typeInfo.PageUrl = GetPageParameterizedUrl(pageType);
+            typeInfo.FieldInfos = GetFields(pageResponseType);
+            typeInfo.LinkMemberInfos = GetLinks(pageResponseType);
+            typeInfo.FormMemberInfos = GetForms(pageResponseType);
             return typeInfo;
         }
 
@@ -47,6 +48,11 @@ namespace CocoriCore.Page
         {
             var neededTypes = pageTypeInfo.FormMemberInfos
                                 .SelectMany(f => new Type[] { f.MessageType, f.ResponseType })
+                                .Concat(pageTypeInfo.FieldInfos
+                                    .Where(f => f.FieldType != typeof(string))
+                                    .Select(f => f.FieldType)
+                                    .ToList()
+                                )
                                 .Distinct()
                                 .ToList();
 
@@ -54,7 +60,8 @@ namespace CocoriCore.Page
             {
                 Name = type.Name,
                 IsPage = false,
-                FieldInfos = GetMessageFields(type)
+                FieldInfos = GetFields(type),
+                LinkMemberInfos = GetLinks(type)
             });
         }
 
@@ -69,33 +76,21 @@ namespace CocoriCore.Page
             return pageType.GetGenericArguments(typeof(IPage<>))[0];
         }
 
-        public List<FieldInfo> GetMessageFields(Type type)
+        public List<FieldInfo> GetFields(Type type)
         {
             var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
 
             return fields
                 .Where(f => !f.GetMemberType().IsAssignableTo(typeof(ILink))
                         && !f.GetMemberType().IsAssignableTo(typeof(IForm))
+                        && !f.GetMemberType().IsAssignableTo(typeof(IGet))
                         )
                 .ToList();
         }
 
-        public List<FieldInfo> GetPageFields(Type pageType)
+        public List<LinkMemberInfo> GetLinks(Type type)
         {
-            var responseType = GetPageResponseType(pageType);
-            var fields = responseType.GetFields(BindingFlags.Instance | BindingFlags.Public);
-
-            return fields
-                .Where(f => !f.GetMemberType().IsAssignableTo(typeof(ILink))
-                        && !f.GetMemberType().IsAssignableTo(typeof(IForm))
-                        )
-                .ToList();
-        }
-
-        public List<LinkMemberInfo> GetPageLinks(Type pageType)
-        {
-            var responseType = GetPageResponseType(pageType);
-            var fields = responseType.GetFields(BindingFlags.Instance | BindingFlags.Public);
+            var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
 
             return fields
                 .Where(f => f.GetMemberType().IsAssignableTo(typeof(ILink)))
@@ -103,10 +98,9 @@ namespace CocoriCore.Page
                 .ToList();
         }
 
-        public List<FormMemberInfo> GetPageForms(Type pageType)
+        public List<FormMemberInfo> GetForms(Type type)
         {
-            var responseType = GetPageResponseType(pageType);
-            var fields = responseType.GetFields(BindingFlags.Instance | BindingFlags.Public);
+            var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public);
 
             return fields
                 .Where(f => f.GetMemberType().IsAssignableTo(typeof(IForm)))

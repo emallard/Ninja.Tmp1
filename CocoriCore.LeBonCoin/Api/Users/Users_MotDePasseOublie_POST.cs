@@ -7,7 +7,7 @@ namespace CocoriCore.LeBonCoin
 
     public class Users_MotDePasseOublie_POST : IMessage<Users_MotDePasseOublie_POSTResponse>, ICommand
     {
-        public Email Email;
+        public string Email;
     }
 
     public class Users_MotDePasseOublie_POSTResponse

@@ -1,24 +1,45 @@
-// GENERATED CODE
-
-class Users_Connexion_Post {
-    Email: string;
-    Password: string;
-    PasswordConfirmation: string;
+class Users_Connexion_POST {
+    Email: String;
+    Password: String;
 }
 
-abstract class Users_Connexion_Page extends Page {
+class Users_Connexion_POSTResponse {
+    Token: String;
+}
+
+class Users_MotDePasseOublie_POST {
+    Email: String;
+}
+
+class Users_MotDePasseOublie_POSTResponse {
+    Redirect: string;
+}
+
+class MenuUtilisateur {
+    Deconnexion: string;
+    Connexion: string;
+    Inscription: string;
+}
+
+abstract class Accueil_PAGE extends Page {
+    PageUrl:string = '/api/';
+    Connexion: string;
+}
+
+abstract class Users_Connexion_PAGE extends Page {
+    PageUrl:string = '/api/users/connexion';
     MotDePasseOublie: string;
-    Form: Form<Users_Connexion_Post>;
+    Form: Form<Users_Connexion_POST, Users_Connexion_POSTResponse>;
 }
 
-class Users_MotDePasseOublie_Post {
-    Email: string;
+abstract class Users_MotDePasseOublie_PAGE extends Page {
+    PageUrl:string = '/api/users/mot-de-passe-oublie';
+    Form: Form<Users_MotDePasseOublie_POST, Users_MotDePasseOublie_POSTResponse>;
 }
 
-abstract class Users_MotDePasseOublie_Page extends Page {
-    Form: Form<Users_MotDePasseOublie_Post>;
+abstract class Vendeur_Dashboard_PAGE extends Page {
+    PageUrl:string = '/api/vendeur';
+    MenuUtilisateur: MenuUtilisateur;
+    Reunions: string;
 }
-
-// END OF GENERATED CODE
-
 

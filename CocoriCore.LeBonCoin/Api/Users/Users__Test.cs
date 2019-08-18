@@ -122,7 +122,7 @@ namespace CocoriCore.LeBonCoin
                 .Result.GetForm(p => p.Form)
                         .Follow(new Users_MotDePasseOublie_POST()
                         {
-                            Email = new Email { Value = "aa@aa.aa" }
+                            Email = "aa@aa.aa"
                         }, r => r.Redirect)
                 .Result
                 .Page;

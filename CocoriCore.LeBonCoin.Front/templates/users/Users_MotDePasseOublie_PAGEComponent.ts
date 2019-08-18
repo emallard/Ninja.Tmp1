@@ -1,5 +1,4 @@
-
-class Users_MotDePasseOublie_PageImpl extends Users_MotDePasseOublie_Page {
+class Users_MotDePasseOublie_PAGEComponent extends Users_MotDePasseOublie_PAGE {
 
     constructor() {
         super();
@@ -17,4 +16,5 @@ class Users_MotDePasseOublie_PageImpl extends Users_MotDePasseOublie_Page {
             return false;
         })
     }
+
 }

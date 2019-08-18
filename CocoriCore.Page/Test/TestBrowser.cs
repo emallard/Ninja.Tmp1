@@ -33,12 +33,12 @@ namespace CocoriCore.Page
             return redirect;
         }
 
-        private async Task<T> ExecuteAsync<T>(IMessage<T> message)
+        public async Task<T> ExecuteAsync<T>(IMessage<T> message)
         {
             return (T)(await this.ExecuteAsync((IMessage)message));
         }
 
-        private async Task<object> ExecuteAsync(IMessage message)
+        public async Task<object> ExecuteAsync(IMessage message)
         {
             using (var unitOfWork = unitOfWorkFactory.NewUnitOfWork())
             {
@@ -46,6 +46,35 @@ namespace CocoriCore.Page
                 var response = await messagebus.ExecuteAsync(message);
                 return response;
             }
+        }
+
+        public BrowserForm<TPost, TPostResponse> GetForm<TPost, TPostResponse>(Form2<TPost, TPostResponse> form) where TPost : IMessage<TPostResponse>
+        {
+            return new BrowserForm<TPost, TPostResponse>(this, form);
+        }
+    }
+
+    public class BrowserForm<TPost, TPostResponse> where TPost : IMessage<TPostResponse>
+    {
+        public readonly TestBrowser testBrowser;
+        private readonly Form2<TPost, TPostResponse> form;
+
+        public BrowserForm(TestBrowser testBrowser, Form2<TPost, TPostResponse> form)
+        {
+            this.testBrowser = testBrowser;
+            this.form = form;
+        }
+
+        public async Task<TPostResponse> Submit(TPost post)
+        {
+            return await this.testBrowser.ExecuteAsync(post);
+        }
+
+        public async Task<T> Follow<T>(TPost post, Func<TPostResponse, ILink<IMessage<T>>> getLink)
+        {
+            var postResponse = await this.testBrowser.ExecuteAsync(post);
+            var link = getLink(postResponse);
+            return await testBrowser.ExecuteAsync(link.Message);
         }
     }
 }

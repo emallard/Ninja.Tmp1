@@ -6,9 +6,9 @@ namespace CocoriCore.LeBonCoin
 {
     public class TestUser
     {
-        private readonly IBrowser browser;
+        private readonly TestBrowser browser;
 
-        public TestUser(IBrowser browser)
+        public TestUser(TestBrowser browser)
         {
             this.browser = browser;
         }
@@ -23,39 +23,15 @@ namespace CocoriCore.LeBonCoin
             return await this.browser.Display(message);
         }
 
+        /*
         public async Task<TPage> Submit<TPost, TPostResponse, TPage>(Form<TPost, TPostResponse, TPage> submit, TPost post) where TPost : IMessage<TPostResponse> where TPage : IPage
         {
             return await this.browser.Submit(submit, post);
+        }*/
+
+        public BrowserForm<TPost, TPostResponse> GetForm<TPost, TPostResponse>(Form2<TPost, TPostResponse> form) where TPost : IMessage<TPostResponse>
+        {
+            return this.browser.GetForm(form);
         }
     }
-    /*
-    public class TestUserDisplay<TResponse>
-    {
-        private readonly TestUser user;
-        private readonly TResponse response;
-
-        public TestUserDisplay(TestUser user, TResponse response)
-        {
-            this.user = user;
-            this.response = response;
-        }
-
-        public async Task<TPage> Submit<TPost, TPage>(ISubmit<TPost, TPage> submit, TPost post) where TPage : new() where TPost : IMessage
-        {
-            return user.Submit(submit, post);
-        }
-    }
-
-    public class TestUserSubmit<T>
-    {
-        public TestUserSubmit()
-        {
-
-        }
-
-        public async Task<TestUserSubmit> Display()
-        {
-            Click<T>(ILink < IMessage < T >> a)
-        }
-    }*/
 }

@@ -12,8 +12,10 @@ namespace CocoriCore.LeBonCoin
 
         }
 
+        /*
         public async Task NouvelleReunion()
         {
+            
             var browser = CreateUser();
             //browser.EnTantQueVendeur();
             var nouvelleReunion = await browser.Display(new Vendeur_NouvelleAnnonce_GET());
@@ -27,5 +29,6 @@ namespace CocoriCore.LeBonCoin
             var reunion = await browser.Click(reunions.Reunions.First().LinkReunion);
             var reunionEdit = await browser.Click(reunion.Edit);
         }
+        */
     }
 }

@@ -7,10 +7,6 @@ namespace CocoriCore.LeBonCoin
 
     public class Vendeur_Annonces_Id_PAGE : IMessage<Vendeur_Annonces_Id_PAGEResponse>
     {
-        public Vendeur_Annonces_Id_PAGE(Guid id)
-        {
-            this.Id = id;
-        }
         public Guid Id;
     }
 
@@ -28,7 +24,7 @@ namespace CocoriCore.LeBonCoin
             await Task.CompletedTask;
             var response = new Vendeur_Annonces_Id_PAGEResponse();
             response.Edit = Link.New(new Vendeur_Annonces_Id_Edit_PAGE() { Id = query.Id });
-            response.Cancel = Link.New(new Vendeur_Annonces_Id_Cancel_POST(query.Id));
+            response.Cancel = Link.New(new Vendeur_Annonces_Id_Cancel_POST { Id = query.Id });
             return response;
         }
     }

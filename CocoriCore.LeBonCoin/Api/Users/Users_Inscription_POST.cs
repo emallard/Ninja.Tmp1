@@ -12,11 +12,14 @@ namespace CocoriCore.LeBonCoin
         public string Nom;
         public string Prenom;
         public string DateNaissance;
+
     }
 
     public class Users_Inscription_POSTResponse
     {
         public string jwt;
+
+        public Link<Vendeur_Dashboard_PAGE> Redirect;
     }
 
     public class Users_Inscription_POSTHandler : MessageHandler<Users_Inscription_POST, Users_Inscription_POSTResponse>
@@ -24,7 +27,11 @@ namespace CocoriCore.LeBonCoin
         public override async Task<Users_Inscription_POSTResponse> ExecuteAsync(Users_Inscription_POST command)
         {
             await Task.CompletedTask;
-            return new Users_Inscription_POSTResponse() { jwt = "jwt" };
+            return new Users_Inscription_POSTResponse()
+            {
+                jwt = "jwt",
+                Redirect = Link.New(new Vendeur_Dashboard_PAGE())
+            };
         }
     }
 }

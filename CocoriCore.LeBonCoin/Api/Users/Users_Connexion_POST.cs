@@ -17,9 +17,10 @@ namespace CocoriCore.LeBonCoin
         public string Password;
     }
 
-    public class Users_Connexion_POSTResponse
+    public class Users_Connexion_POSTResponse : IRedirect<Vendeur_Dashboard_GET>
     {
-        public string token;
+        public string Token;
+        public ILink<Vendeur_Dashboard_GET> Redirect { get; set; }
     }
 
 
@@ -40,7 +41,8 @@ namespace CocoriCore.LeBonCoin
 
             return new Users_Connexion_POSTResponse()
             {
-                token = utilisateur.Id.ToString()
+                Token = utilisateur.Id.ToString(),
+                Redirect = Link.New(new Vendeur_Dashboard_GET())
             };
         }
     }

@@ -19,7 +19,10 @@ namespace CocoriCore.LeBonCoin
         public override async Task<Vendeur_Dashboard_PAGEResponse> ExecuteAsync(Vendeur_Dashboard_PAGE query)
         {
             await Task.CompletedTask;
-            return new Vendeur_Dashboard_PAGEResponse();
+            return new Vendeur_Dashboard_PAGEResponse()
+            {
+                MenuUtilisateur = new MenuUtilisateur()
+            };
         }
     }
 }

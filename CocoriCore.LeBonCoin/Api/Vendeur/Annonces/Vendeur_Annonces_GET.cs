@@ -22,7 +22,7 @@ namespace CocoriCore.LeBonCoin
         {
             public Guid Id;
 
-            public ILink<Vendeur_Annonces_Id_GET> LinkReunion => Link.New(new Vendeur_Annonces_Id_GET(this.Id));
+            public ILink<Vendeur_Annonces_Id_GET> LinkReunion => Link.New(new Vendeur_Annonces_Id_GET());
         }
     }
 }

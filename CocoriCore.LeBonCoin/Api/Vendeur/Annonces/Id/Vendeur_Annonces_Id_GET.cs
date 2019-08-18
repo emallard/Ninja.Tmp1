@@ -6,10 +6,6 @@ namespace CocoriCore.LeBonCoin
 
     public class Vendeur_Annonces_Id_GET : IMessage<Vendeur_Annonces_Id_GETResponse>
     {
-        public Vendeur_Annonces_Id_GET(Guid id)
-        {
-            this.Id = id;
-        }
         public Guid Id;
     }
 
@@ -22,7 +18,7 @@ namespace CocoriCore.LeBonCoin
 
         public ILink<Vendeur_Annonces_Id_Edit_GET> Edit => Link.New(new Vendeur_Annonces_Id_Edit_GET() { Id = this.Id });
 
-        public ILink<Vendeur_Annonces_Id_Cancel_POST> Cancel => Link.New(new Vendeur_Annonces_Id_Cancel_POST(this.Id));
+        public ILink<Vendeur_Annonces_Id_Cancel_POST> Cancel => Link.New(new Vendeur_Annonces_Id_Cancel_POST { Id = this.Id });
     }
 
     public class Vendeur_Annonces_Id_GETHandler

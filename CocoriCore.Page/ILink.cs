@@ -4,9 +4,7 @@ namespace CocoriCore
     {
         object GetMessage { get; }
     }
-}
-namespace CocoriCore
-{
+
     public interface ILink<out T> : ILink
     {
         T Message { get; }

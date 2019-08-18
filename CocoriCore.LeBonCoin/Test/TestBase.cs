@@ -40,6 +40,11 @@ namespace CocoriCore.LeBonCoin
             return kernel.Get<TestUser>();
         }
 
+        public TestUserFluent<int> CreateUserFluent()
+        {
+            return new TestUserFluent<int>(kernel.Get<TestBrowser>(), 0);
+        }
+
         public IEmailReader GetEmailReader()
         {
             return kernel.Get<IEmailReader>();

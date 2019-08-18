@@ -8,13 +8,7 @@ namespace CocoriCore.LeBonCoin
 
     public class Vendeur_Annonces_Id_Cancel_POST : IMessage<Void>, ICommand
     {
-        public Guid R1 => Id;
         public Guid Id;
-
-        public Vendeur_Annonces_Id_Cancel_POST(Guid id)
-        {
-            Id = id;
-        }
     }
 
     public class Vendeur_Annonces_Id_Cancel_POSTHandler : MessageHandler<Vendeur_Annonces_Id_Cancel_POST, Void>

@@ -15,9 +15,6 @@ class Villes_GETResponse {
     Resultats: String[];
 }
 
-class String[] {
-}
-
 class Users_Connexion_POST {
     Email: String;
     Password: String;

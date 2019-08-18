@@ -49,7 +49,8 @@ namespace CocoriCore.Page
             return pageTypeInfo.FormMemberInfos
                                 .SelectMany(f => new Type[] { f.MessageType, f.ResponseType })
                                 .Concat(pageTypeInfo.FieldInfos
-                                    .Where(f => f.FieldType != typeof(string))
+                                    .Where(f => f.FieldType != typeof(string)
+                                             && f.FieldType != typeof(string[]))
                                     .Select(f => f.FieldType)
                                     .ToList()
                                 )

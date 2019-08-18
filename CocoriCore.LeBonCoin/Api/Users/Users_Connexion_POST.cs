@@ -17,10 +17,10 @@ namespace CocoriCore.LeBonCoin
         public string Password;
     }
 
-    public class Users_Connexion_POSTResponse : IRedirect<Vendeur_Dashboard_GET>
+    public class Users_Connexion_POSTResponse
     {
         public string Token;
-        public ILink<Vendeur_Dashboard_GET> Redirect { get; set; }
+        public ILink<Vendeur_Dashboard_GET> Redirect;
     }
 
 

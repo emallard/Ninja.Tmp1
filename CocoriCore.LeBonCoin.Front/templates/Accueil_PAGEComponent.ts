@@ -5,5 +5,6 @@ class Accueil_PAGEComponent extends Accueil_PAGE {
     }
 
     async postInit() {
+        document.getElementById("Connexion").setAttribute("href", this.Connexion);
     }
 }

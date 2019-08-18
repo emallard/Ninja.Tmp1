@@ -4,7 +4,8 @@
     this.use('Template');
 
     this.addPage = function (pageUrl, pageType, pageTemplatePath) {
-      this.get('#/' + pageUrl, function (context) {
+      console.log('addPage ' + pageUrl);
+      this.get('#' + pageUrl, function (context) {
         context.app.swap('');
         context.render(pageTemplatePath, {}).appendTo(context.$element()).then(function () {
           var page = new pageType();

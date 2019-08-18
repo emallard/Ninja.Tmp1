@@ -5,6 +5,7 @@ class Users_Connexion_POST {
 
 class Users_Connexion_POSTResponse {
     Token: String;
+    Redirect: string;
 }
 
 class Users_MotDePasseOublie_POST {

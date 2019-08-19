@@ -31,23 +31,23 @@ namespace CocoriCore.LeBonCoin
             kernel.Bind<IEmailSender>().To<Emails>().InSingletonScope();
             kernel.Bind<IEmailReader>().To<Emails>().InSingletonScope();
 
-            kernel.Bind<IBrowser>().To<TestBrowser>();
-            kernel.Bind<TestUser>().ToSelf();
+            kernel.Bind<BrowserHistory>().ToSelf().InSingletonScope();
 
         }
-        public TestUser CreateUser()
-        {
-            return kernel.Get<TestUser>();
-        }
 
-        public TestBrowserFluent<int> CreateUserFluent()
+        public TestBrowserFluent<Accueil_PAGEResponse> CreateUser(string id)
         {
-            return new TestBrowserFluent<int>(kernel.Get<TestBrowser>(), 0);
+            return kernel.Get<TestBrowserFluent<int>>().SetPageAndId(0, id).Display(new Accueil_PAGE());
         }
 
         public IEmailReader GetEmailReader()
         {
             return kernel.Get<IEmailReader>();
+        }
+
+        public BrowserHistory GetHistory()
+        {
+            return kernel.Get<BrowserHistory>();
         }
     }
 }

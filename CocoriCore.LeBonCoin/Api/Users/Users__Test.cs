@@ -12,7 +12,7 @@ namespace CocoriCore.LeBonCoin
         [Fact]
         public void InscriptionConnexion()
         {
-            var user = CreateUserFluent();
+            var user = CreateUser("vendeur");
 
             var dashboard =
             user.Display(new Users_Inscription_PAGE())
@@ -51,10 +51,10 @@ namespace CocoriCore.LeBonCoin
         [Fact]
         public void MauvaisMotDePasse()
         {
-            var user = CreateUserFluent();
+            var user = CreateUser("vendeur");
             var connexion =
             user.Display(new Accueil_PAGE())
-                .Display(p => p.Connexion);
+                .Follow(p => p.Connexion);
 
             Action a = () => connexion
                 .GetForm(p => p.Form)
@@ -103,7 +103,7 @@ namespace CocoriCore.LeBonCoin
         public async Task MotDePasseOublie()
         {
 
-            var user = CreateUserFluent();
+            var user = CreateUser("vendeur");
             var emails = GetEmailReader();
 
             var confirmation =
@@ -116,9 +116,9 @@ namespace CocoriCore.LeBonCoin
                         PasswordConfirmation = "azerty"
                     })
                     .Redirect(r => r.Redirect)
-                .Display(p => p.MenuUtilisateur.Deconnexion)
-                .Display(p => p.Connexion)
-                .Display(p => p.MotDePasseOublie)
+                .Follow(p => p.MenuUtilisateur.Deconnexion)
+                .Follow(p => p.Connexion)
+                .Follow(p => p.MotDePasseOublie)
                     .GetForm(p => p.Form)
                     .Submit(new Users_MotDePasseOublie_POST()
                     {

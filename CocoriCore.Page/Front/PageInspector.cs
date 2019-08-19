@@ -90,7 +90,6 @@ namespace CocoriCore.Page
             return fields
                 .Where(f => !f.GetMemberType().IsAssignableTo(typeof(IPage))
                         && !f.GetMemberType().IsAssignableTo(typeof(IForm))
-                        && !f.GetMemberType().IsAssignableTo(typeof(IGet))
                         )
                 .ToArray();
         }

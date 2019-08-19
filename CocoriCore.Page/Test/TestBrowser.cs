@@ -5,7 +5,7 @@ using CocoriCore;
 namespace CocoriCore.Page
 {
 
-    public class TestBrowser : IBrowser
+    public class TestBrowser
     {
         private readonly IUnitOfWorkFactory unitOfWorkFactory;
 
@@ -35,12 +35,14 @@ namespace CocoriCore.Page
             }
         }
 
+        /*
         public BrowserForm<TPost, TPostResponse> GetForm<TPost, TPostResponse>(Form<TPost, TPostResponse> form) where TPost : IMessage<TPostResponse>
         {
             return new BrowserForm<TPost, TPostResponse>(this, form);
-        }
+        }*/
     }
 
+    /*
     public class BrowserForm<TPost, TPostResponse> where TPost : IMessage<TPostResponse>
     {
         public readonly TestBrowser testBrowser;
@@ -64,4 +66,5 @@ namespace CocoriCore.Page
             return await testBrowser.ExecuteAsync(message);
         }
     }
+    */
 }

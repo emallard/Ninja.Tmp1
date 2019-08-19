@@ -12,10 +12,11 @@ namespace CocoriCore.LeBonCoin
         [Fact]
         public void RechercheParCategorie()
         {
-            var vendeur = CreateUserFluent();
-            //user.EnTantQueVendeur();
-            var vendeurAnnonce = vendeur.Display(new Vendeur_Dashboard_PAGE())
-                .Display(p => p.NouvelleAnnonce)
+            var vendeurDashboard = CreateUser("vendeur")
+                .Play(new EnTantQueVendeur());
+
+            var vendeurAnnonce = vendeurDashboard
+                .Follow(p => p.NouvelleAnnonce)
                 .GetForm(p => p.Form)
                 .Submit(new Vendeur_NouvelleAnnonce_POST()
                 {
@@ -25,8 +26,8 @@ namespace CocoriCore.LeBonCoin
                 .Redirect(r => r.Redirect)
                 .Page;
 
-            var visiteur = CreateUserFluent();
-            var annonces = visiteur.Display(new Accueil_PAGE())
+            var visiteur = CreateUser("visiteur");
+            var annonces = visiteur
                 .GetForm(p => p.Form)
                 .Submit(new Annonces_POST()
                 {
@@ -35,10 +36,12 @@ namespace CocoriCore.LeBonCoin
                 })
                 .Redirect(r => r.Redirect)
                 .Page;
-
+            /*
             annonces.Items.Should().HaveCount(1);
             annonces.Items[0].Ville.Should().Be("Paris");
             annonces.Items[0].Categorie.Should().Be("Voiture");
+            */
+            Console.WriteLine(this.GetHistory().Summary());
         }
     }
 }

@@ -45,55 +45,46 @@ namespace CocoriCore.LeBonCoin
         }
 
         [Fact]
-        public void MauvaisMotDePasse()
+        public void ImpossibleDeSeConnecter()
         {
-            var user = CreateUser("vendeur");
-            var connexion =
-            user.Display(new Accueil_PAGE())
-                .Follow(p => p.Connexion);
+            var vendeur1 = CreateUser("vendeur1");
+
+            var dashboard =
+            vendeur1.Display(new Users_Inscription_PAGE())
+                .GetForm(p => p.Form)
+                .Submit(new Users_Inscription_POST()
+                {
+                    Email = "aa@aa.aa",
+                    Password = "azerty",
+                    PasswordConfirmation = "azerty",
+                    Nom = "DeNice",
+                    Prenom = "Brice"
+                });
+
+            var vendeur2 = CreateUser("vendeur2");
+            var connexion = vendeur2.Follow(p => p.Connexion);
 
             Action a = () => connexion
                 .GetForm(p => p.Form)
                 .Submit(new Users_Connexion_POST()
                 {
                     Email = "aa@aa.aa",
+                    Password = "mauvaisMotDePasse"
+                });
+
+            a.Should().Throw<Exception>();
+
+            Action b = () => connexion
+                .GetForm(p => p.Form)
+                .Submit(new Users_Connexion_POST()
+                {
+                    Email = "bb@bb.bb",
                     Password = "azerty"
                 });
 
+            b.Should().Throw<Exception>();
 
-            //a.Should().Throw();
         }
-
-        /*
-        public async Task MotDePasseOublie()
-        {
-
-            var user = CreateUser();
-            var emails = GetEmailReader();
-
-            var inscription = await user.Display(new Users_Inscription_PAGE());
-            var dashboard = await user.Display(await user.Submit(inscription.Form, new Users_Inscription_POST()
-            {
-                Email = "aa@aa.aa",
-                Password = "azerty",
-                PasswordConfirmation = "azerty"
-            }));
-
-            var accueil = await user.Click(dashboard.MenuUtilisateur.Deconnexion);
-            var connexion = await user.Click(accueil.Connexion);
-            var motDePasseOublie = await user.Click(connexion.MotDePasseOublie);
-            var confirmation = await user.Display(await user.Submit(motDePasseOublie.Form, new Users_MotDePasseOublie_POST()
-            {
-                Email = new Email { Value = "aa@aa.aa" }
-            }));
-
-
-            confirmation.Should().NotBeNull();
-
-            var email = (EmailMotDePasseOublie)(await emails.Read("aa@aa.aa")).Body;
-            await user.Display(new Users_SaisieNouveauMotDePasse_Token_PAGE() { Token = email.Token });
-        }
-        */
 
         [Fact]
         public async Task MotDePasseOublie()

@@ -27,17 +27,26 @@ namespace CocoriCore.LeBonCoin
     public class Users_Connexion_POSTHandler : MessageHandler<Users_Connexion_POST, Users_Connexion_POSTResponse>
     {
         private readonly IRepository repository;
+        private readonly IHashService hashService;
 
-        public Users_Connexion_POSTHandler(IRepository repository)
+        public Users_Connexion_POSTHandler(IRepository repository, IHashService hashService)
         {
             this.repository = repository;
+            this.hashService = hashService;
         }
 
-        public override async Task<Users_Connexion_POSTResponse> ExecuteAsync(Users_Connexion_POST command)
+        public override async Task<Users_Connexion_POSTResponse> ExecuteAsync(Users_Connexion_POST message)
         {
-            var utilisateur = await repository.Query<Utilisateur>().Where(x => x.Email == command.Email).FirstOrDefaultAsync();
+            var utilisateur = await repository
+                .Query<Utilisateur>()
+                .Where(x => x.Email == message.Email)
+                .FirstOrDefaultAsync();
+
             if (utilisateur == null)
-                throw new Exception("Validation Exception, Email, NotFound");
+                throw new Exception("Validation Exception no corresponding user");
+
+            if (!await hashService.PasswordMatchHashAsync(message.Password, utilisateur.HashMotDePasse))
+                throw new Exception("Validation Exception no corresponding user");
 
             return new Users_Connexion_POSTResponse()
             {

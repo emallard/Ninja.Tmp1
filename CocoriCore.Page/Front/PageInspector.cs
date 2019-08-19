@@ -32,6 +32,11 @@ namespace CocoriCore.Page
                     .ToList();
         }
 
+        public IEnumerable<Type> GetPageResponseTypes()
+        {
+            return GetPageTypes().Select(x => this.GetPageResponseType(x)).ToArray();
+        }
+
         public FrontTypeInfo GetPageTypeInfo(Type pageType)
         {
             var pageResponseType = GetPageResponseType(pageType);

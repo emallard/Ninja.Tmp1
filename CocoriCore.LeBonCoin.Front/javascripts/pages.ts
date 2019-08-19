@@ -62,7 +62,9 @@ class Vendeur_NouvelleAnnonce_POSTResponse {
     Redirect: string;
 }
 
-class AnnonceItem[] {
+class Vendeur_Annonces_PAGEResponseItem {
+    Id: Guid;
+    Lien: string;
 }
 
 class Guid {
@@ -72,11 +74,16 @@ class Vendeur_Annonces_Id_Cancel_POST {
     Id: Guid;
 }
 
-class Annonces_PAGEItem[] {
+class Annonces_PAGEItem {
+    Id: Guid;
+    Ville: String;
+    Categorie: String;
+    Text: String;
+    Lien: string;
 }
 
 abstract class Accueil_PAGE extends Page {
-    PageUrl:string = '/api/';
+    PageUrl:string = '/api';
     Categories: String[];
     Connexion: string;
     Inscription: string;
@@ -117,7 +124,7 @@ abstract class Vendeur_NouvelleAnnonce_PAGE extends Page {
 
 abstract class Vendeur_Annonces_PAGE extends Page {
     PageUrl:string = '/api/vendeur/annonces';
-    Reunions: AnnonceItem[];
+    Annonces: Vendeur_Annonces_PAGEResponseItem[];
     NouvelleReunion: string;
 }
 

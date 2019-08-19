@@ -4,6 +4,6 @@ namespace CocoriCore.LeBonCoin
 {
     public class EmailMotDePasseOublie
     {
-        public Guid Token;
+        public Users_SaisieNouveauMotDePasse_Token_PAGE Lien;
     }
 }

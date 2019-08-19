@@ -104,7 +104,7 @@ namespace CocoriCore.LeBonCoin
         {
 
             var user = CreateUser("vendeur");
-            var emails = GetEmailReader();
+            var emailReader = GetEmailReader();
 
             var confirmation =
             user.Display(new Users_Inscription_PAGE())
@@ -125,13 +125,31 @@ namespace CocoriCore.LeBonCoin
                         Email = "aa@aa.aa"
                     })
                     .Redirect(r => r.Redirect)
-
                 .Page;
 
             confirmation.Should().NotBeNull();
 
-            var email = (EmailMotDePasseOublie)(await emails.Read("aa@aa.aa")).Body;
-            user.Display(new Users_SaisieNouveauMotDePasse_Token_PAGE() { Token = email.Token });
+            var emails = await emailReader.Read<EmailMotDePasseOublie>("aa@aa.aa");
+            emails.Should().HaveCount(1);
+            var lien = emails[0].Body.Lien;
+            var dashboard = user.Display(lien)
+                .GetForm(p => p.Form)
+                .Submit(new Users_SaisieNouveauMotDePasse_Token_POST
+                {
+                    Token = lien.Token,
+                    MotDePasse = "nouveauPassw0rd",
+                    Confirmation = "nouveauPassw0rd",
+                })
+                .Redirect(r => r.Redirect)
+                .GetForm(p => p.Form)
+                .Submit(new Users_Connexion_POST()
+                {
+                    Email = "aa@aa.aa",
+                    Password = "nouveauPassw0rd",
+                })
+                .Redirect(r => r.Redirect);
+
+            dashboard.Should().NotBeNull();
         }
     }
 }

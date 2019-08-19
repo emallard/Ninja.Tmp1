@@ -20,7 +20,10 @@ namespace CocoriCore.LeBonCoin
             kernel.Load(new ContextPreservationModule());
             kernel.Load(new CocoricoreNinjectModule());
 
+            kernel.Bind<IHashService>().To<HashService>().InSingletonScope();
+
             // Repository
+            kernel.Bind<IUIDProvider>().To<UIDProvider>().InSingletonScope();
             kernel.Bind<IInMemoryEntityStore>().To<InMemoryEntityStore>().InSingletonScope();
             kernel.Bind<IRepository>().To<MemoryRepository>().InNamedScope("unitofwork");
 
@@ -28,8 +31,9 @@ namespace CocoriCore.LeBonCoin
             kernel.Bind<HandlerFinder>().ToConstant(new HandlerFinder(CocoriCore.LeBonCoin.AssemblyInfo.Assembly)).InSingletonScope();
             kernel.Bind<IMessageBus>().To<CocoriCore.LeBonCoin.MessageBus>().InNamedScope("unitofwork");
 
-            kernel.Bind<IEmailSender>().To<Emails>().InSingletonScope();
-            kernel.Bind<IEmailReader>().To<Emails>().InSingletonScope();
+            kernel.Bind<EmailSenderReaderMock>().ToSelf().InSingletonScope();
+            kernel.Bind<IEmailSender>().ToMethod(c => c.Kernel.Get<EmailSenderReaderMock>());
+            kernel.Bind<IEmailReader>().ToMethod(c => c.Kernel.Get<EmailSenderReaderMock>());
 
             kernel.Bind<BrowserHistory>().ToSelf().InSingletonScope();
 

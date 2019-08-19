@@ -6,6 +6,6 @@ namespace CocoriCore.LeBonCoin
 
     public interface IEmailReader
     {
-        Task<MyMailMessage> Read(string email);
+        Task<MyMailMessage<T>[]> Read<T>(string email);
     }
 }

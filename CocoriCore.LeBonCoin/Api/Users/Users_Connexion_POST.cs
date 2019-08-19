@@ -35,7 +35,7 @@ namespace CocoriCore.LeBonCoin
 
         public override async Task<Users_Connexion_POSTResponse> ExecuteAsync(Users_Connexion_POST command)
         {
-            var utilisateur = await repository.Query<Utilisateur>().Where(x => x.Email == command.Email).FirstAsync();
+            var utilisateur = await repository.Query<Utilisateur>().Where(x => x.Email == command.Email).FirstOrDefaultAsync();
             if (utilisateur == null)
                 throw new Exception("Validation Exception, Email, NotFound");
 

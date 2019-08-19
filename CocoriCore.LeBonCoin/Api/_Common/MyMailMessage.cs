@@ -1,18 +1,26 @@
 namespace CocoriCore.LeBonCoin
 {
-    public class MyMailMessage
+    public interface IMyMailMessage
     {
-        public MyMailMessage(string from, string to, string subject, object body)
+        string From { get; }
+        string To { get; }
+        string Subject { get; }
+        object Body { get; }
+    }
+
+    public class MyMailMessage<T> : IMyMailMessage
+    {
+        public MyMailMessage()
         {
-            From = from;
-            To = to;
-            Subject = subject;
-            Body = body;
+
         }
 
-        public string From { get; }
-        public string To { get; }
-        public string Subject { get; }
-        public object Body { get; }
+        public string From { get; set; }
+        public string To { get; set; }
+        public string Subject { get; set; }
+
+        public T Body { get; set; }
+
+        object IMyMailMessage.Body => this.Body;
     }
 }

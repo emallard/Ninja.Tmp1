@@ -3,6 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CocoriCore;
+using CocoriCore.Router;
+
 namespace CocoriCore.LeBonCoin.Api
 {
 
@@ -24,7 +26,7 @@ namespace CocoriCore.LeBonCoin.Api
 
         public override async Task<ApiFootprint> ExecuteAsync(ApiFootprintQuery query)
         {
-            var routes = ((Router)this.router).AllRoutes;
+            var routes = ((CocoriCore.Router.Router)this.router).AllRoutes;
             await Task.CompletedTask;
             return this.footprintGenerator.Generate(
                 routes

@@ -6,6 +6,7 @@
 
 <ItemGroup>
     <ProjectReference Include="..\CocoriCore\backend\CocoriCore\CocoriCore.csproj" />
+    <ProjectReference Include="..\CocoriCore\backend\CocoriCore.Router\CocoriCore.Router.csproj" />
   </ItemGroup>
 
 </Project>

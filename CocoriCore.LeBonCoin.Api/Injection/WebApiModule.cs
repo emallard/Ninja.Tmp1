@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using Ninject.Extensions.ContextPreservation;
 using Ninject;
 using Jose;
-using CocoriCore.TestUtils;
+using CocoriCore.Router;
 
 namespace CocoriCore.LeBonCoin.Api
 {
@@ -43,7 +43,7 @@ namespace CocoriCore.LeBonCoin.Api
 
             //this.Bind<IUserService>().To<UserService>().InNamedScope("unitofwork");
             this.Bind<RouterOptions>().ToConstant(RouterConfiguration.Options());
-            this.Bind<IRouter>().To<Router>().InSingletonScope();
+            this.Bind<IRouter>().To<CocoriCore.Router.Router>().InSingletonScope();
 
             // Autres services
             var settings = new JsonSerializerSettings();

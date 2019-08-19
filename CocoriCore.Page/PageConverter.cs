@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using CocoriCore;
+using CocoriCore.Router;
 using Newtonsoft.Json;
 
 namespace CocoriCore
@@ -15,6 +16,10 @@ namespace CocoriCore
         {
             this.routerOptions = routerOptions;
         }
+
+        public override bool CanWrite { get { return true; } }
+        public override bool CanRead { get { return false; } }
+
         public override bool CanConvert(Type objectType)
         {
             return typeof(IPage).IsAssignableFrom(objectType);
@@ -22,7 +27,7 @@ namespace CocoriCore
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            throw new Exception("IPage Not supposed to be deserialized");
+            throw new Exception("IPage Not supposed to be deserialized with PageConverter");
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

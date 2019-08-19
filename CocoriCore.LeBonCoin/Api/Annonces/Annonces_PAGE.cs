@@ -19,14 +19,14 @@ namespace CocoriCore.LeBonCoin
     {
         public string Ville;
         public string Categorie;
-        public Form<Villes_GET, Villes_GETResponse> RechercheVille;
+        public Form<Villes_GET, Villes_GETResponse> RechercheVille = new Form<Villes_GET, Villes_GETResponse>();
         public string[] Categories;
     }
 
     public class Annonces_PAGEResponse
     {
         public Annonces_PAGEItem[] Items;
-        public Form<Annonces_POST, Annonces_POSTResponse> Form;
+        public Form<Annonces_POST, Annonces_POSTResponse> Form = new Form<Annonces_POST, Annonces_POSTResponse>();
     }
 
     public class Annonces_PAGEHandler : MessageHandler<Annonces_PAGE, Annonces_PAGEResponse>

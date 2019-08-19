@@ -1,13 +1,6 @@
-using System;
-using CocoriCore;
+
 using Ninject.Extensions.NamedScope;
 using Ninject.Modules;
-using CocoriCore.LeBonCoin;
-using Newtonsoft.Json;
-using Ninject.Extensions.ContextPreservation;
-using Ninject;
-using Jose;
-using CocoriCore.TestUtils;
 
 namespace CocoriCore.LeBonCoin.Api
 {

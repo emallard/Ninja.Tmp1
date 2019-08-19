@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using CocoriCore;
+using CocoriCore.Router;
 
 namespace CocoriCore.LeBonCoin.Api
 {
@@ -42,7 +43,7 @@ namespace CocoriCore.LeBonCoin.Api
             Route route = null;
             try
             {
-                route = router.TryFindRoute(httpContext.Request);
+                route = (Route)router.TryFindRoute(httpContext.Request);
                 if (route != null)
                 {
                     var message = await this.messageDeserializer.DeserializeMessageAsync<IMessage>(httpContext.Request, route);

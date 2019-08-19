@@ -4,6 +4,7 @@ using CocoriCore;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using CocoriCore.LeBonCoin;
+using CocoriCore.Router;
 
 namespace CocoriCore.LeBonCoin.Api
 {
@@ -15,10 +16,11 @@ namespace CocoriCore.LeBonCoin.Api
         {
             var builder = new RouterOptionsBuilder();
 
+
+            builder.Get<Accueil_PAGE>()
+                                                        .SetPath("api");
             builder.Get<ApiFootprintQuery>()
                                                         .SetPath("api/footprint");
-            builder.Get<Accueil_PAGE>()
-                                                        .SetPath("api/");
             builder.Get<Users_Connexion_PAGE>()
                                                         .SetPath("api/users/connexion");
             builder.Post<Users_Connexion_POST>()

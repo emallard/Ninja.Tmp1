@@ -1,11 +1,12 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace CocoriCore.LeBonCoin
 {
-    public class EmailSenderReaderMock : IEmailReader, IEmailSender
+
+    public class EmailSenderAndReader : IEmailReader, IEmailSender
     {
         public List<IMyMailMessage> ReadMessages = new List<IMyMailMessage>();
         public List<IMyMailMessage> NewMessages = new List<IMyMailMessage>();

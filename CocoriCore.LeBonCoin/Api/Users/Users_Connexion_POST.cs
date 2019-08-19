@@ -19,7 +19,7 @@ namespace CocoriCore.LeBonCoin
 
     public class Users_Connexion_POSTResponse
     {
-        public string Token;
+        public IClaims Claims;
         public Vendeur_Dashboard_PAGE Redirect;
     }
 
@@ -41,7 +41,7 @@ namespace CocoriCore.LeBonCoin
 
             return new Users_Connexion_POSTResponse()
             {
-                Token = utilisateur.Id.ToString(),
+                Claims = new UserClaims() { IdUtilisateur = utilisateur.Id },
                 Redirect = new Vendeur_Dashboard_PAGE()
             };
         }

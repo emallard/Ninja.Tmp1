@@ -21,18 +21,14 @@ namespace CocoriCore.LeBonCoin
                 {
                     Email = "aa@aa.aa",
                     Password = "azerty",
-                    PasswordConfirmation = "azerty"
+                    PasswordConfirmation = "azerty",
+                    Nom = "DeNice",
+                    Prenom = "Brice"
                 })
                 .Redirect(r => r.Redirect);
-            /*
-            var dashboard = await user.Display(await user.Submit(inscription.Form, new Users_Inscription_POST()
-            {
-                Email = "aa@aa.aa",
-                Password = "azerty",
-                PasswordConfirmation = "azerty"
-            }));
-            */
-            dashboard.Page.Should().NotBeNull();
+
+            dashboard.Page.Nom.Should().Be("DeNice");
+            dashboard.Page.Prenom.Should().Be("Brice");
             /*
 
             var accueil = await user.Click(dashboard.MenuUtilisateur.Deconnexion);
@@ -113,7 +109,9 @@ namespace CocoriCore.LeBonCoin
                     {
                         Email = "aa@aa.aa",
                         Password = "azerty",
-                        PasswordConfirmation = "azerty"
+                        PasswordConfirmation = "azerty",
+                        Nom = "Dupont",
+                        Prenom = "Jean"
                     })
                     .Redirect(r => r.Redirect)
                 .Follow(p => p.MenuUtilisateur.Deconnexion)
@@ -149,7 +147,9 @@ namespace CocoriCore.LeBonCoin
                 })
                 .Redirect(r => r.Redirect);
 
-            dashboard.Should().NotBeNull();
+            dashboard.Page.Should().NotBeNull();
+
+            Console.WriteLine(GetHistory().Summary());
         }
     }
 }

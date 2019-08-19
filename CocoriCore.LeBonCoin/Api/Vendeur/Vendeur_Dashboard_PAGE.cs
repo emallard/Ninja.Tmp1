@@ -19,13 +19,24 @@ namespace CocoriCore.LeBonCoin
 
     public class Vendeur_Dashboard_PAGEHandler : MessageHandler<Vendeur_Dashboard_PAGE, Vendeur_Dashboard_PAGEResponse>
     {
+        private readonly IClaimsProvider claimsProvider;
+        private readonly IRepository repository;
+
+        public Vendeur_Dashboard_PAGEHandler(IClaimsProvider claimsProvider, IRepository repository)
+        {
+            this.claimsProvider = claimsProvider;
+            this.repository = repository;
+        }
+
         public override async Task<Vendeur_Dashboard_PAGEResponse> ExecuteAsync(Vendeur_Dashboard_PAGE query)
         {
-            await Task.CompletedTask;
+            var idUtilisateur = claimsProvider.GetClaims<UserClaims>().IdUtilisateur;
+            var profile = await repository.LoadAsync<Profile>(x => x.IdUtilisateur, idUtilisateur);
+
             return new Vendeur_Dashboard_PAGEResponse()
             {
-                Nom = "Dupont",
-                Prenom = "Jean"
+                Nom = profile.Nom,
+                Prenom = profile.Prenom
             };
         }
     }

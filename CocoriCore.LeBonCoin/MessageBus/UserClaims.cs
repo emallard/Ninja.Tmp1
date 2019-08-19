@@ -2,8 +2,10 @@ using System;
 
 namespace CocoriCore.LeBonCoin
 {
-    public class UserClaims
+    public class UserClaims : IClaims
     {
-        public Guid Id;
+        public Guid IdUtilisateur;
+
+        public DateTime ExpireAt => new DateTime(3000, 1, 1);
     }
 }

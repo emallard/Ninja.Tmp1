@@ -30,9 +30,9 @@ namespace CocoriCore.LeBonCoin
         public async override Task<Users_SaisieNouveauMotDePasse_Token_POSTResponse> ExecuteAsync(Users_SaisieNouveauMotDePasse_Token_POST message)
         {
             var token = await repository.LoadAsync<TokenMotDePasseOublie>(message.Token);
-            var utilisateur = await repository.LoadAsync<Utilisateur>(token.IdUtilisateur);
-            utilisateur.HashMotDePasse = await this.hashService.HashAsync(message.Confirmation);
-
+            var utilisateur = await repository.LoadAsync<Utilisateur>(x => x.Email, token.Email);
+            utilisateur.HashMotDePasse = await this.hashService.HashAsync(message.MotDePasse);
+            await repository.UpdateAsync(utilisateur);
             return new Users_SaisieNouveauMotDePasse_Token_POSTResponse();
         }
     }

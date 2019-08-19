@@ -30,7 +30,7 @@ namespace CocoriCore.LeBonCoin
             var token = new TokenMotDePasseOublie()
             {
                 Id = Guid.NewGuid(),
-                IdUtilisateur = Guid.Empty
+                Email = query.Email
             };
             await repository.InsertAsync(token);
 

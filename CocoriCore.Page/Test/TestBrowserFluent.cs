@@ -6,6 +6,19 @@ using CocoriCore.Page;
 namespace CocoriCore.LeBonCoin
 {
 
+    public class TestBrowserFluentState
+    {
+        public string Id;
+        public string AuthenticationCookie;
+        public Action<object> OnResponse;/*= (o) =>
+        {
+            if (o is Users_Connexion_POSTResponse)
+            {
+
+            }
+        }*/
+    }
+
     public class TestBrowserFluent<TPage>
     {
         public readonly BrowserHistory history;
@@ -30,7 +43,7 @@ namespace CocoriCore.LeBonCoin
         {
             var message = a(Page);
             this.history.Event(this.Id, HistoryEventType.Follow, message);
-            var nextPage = this.browser.Display(message).Result;
+            var nextPage = this.browser.Follow(Page, message).Result;
             return new TestBrowserFluent<T>(history, browser).SetPageAndId(nextPage, Id);
         }
 
@@ -69,7 +82,7 @@ namespace CocoriCore.LeBonCoin
         {
             this.browserFluent.history.Event(this.browserFluent.Id, HistoryEventType.Submit, post);
 
-            var postResponse = this.browserFluent.browser.ExecuteAsync(post).Result;
+            var postResponse = this.browserFluent.browser.Submit(this.browserFluent.Page, form, post).Result;
             return new TestBrowserFluentSubmitted<TPage, TPost, TPostResponse>(this.browserFluent, postResponse);
         }
     }
@@ -90,7 +103,7 @@ namespace CocoriCore.LeBonCoin
         {
             var message = getMessage(postResponse);
             this.browserFluent.history.Event(this.browserFluent.Id, HistoryEventType.FormRedirect, message);
-            var page = browserFluent.browser.ExecuteAsync(message).Result;
+            var page = browserFluent.browser.SubmitRedirect(message).Result;
             return new TestBrowserFluent<T>(this.browserFluent.history, this.browserFluent.browser).SetPageAndId(page, this.browserFluent.Id);
         }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using CocoriCore;
 
@@ -11,25 +12,46 @@ namespace CocoriCore.LeBonCoin
         public string PasswordConfirmation;
         public string Nom;
         public string Prenom;
-        public string DateNaissance;
 
     }
 
     public class Users_Inscription_POSTResponse
     {
-        public string jwt;
+        public IClaims Claims;
 
         public Vendeur_Dashboard_PAGE Redirect;
     }
 
     public class Users_Inscription_POSTHandler : MessageHandler<Users_Inscription_POST, Users_Inscription_POSTResponse>
     {
-        public override async Task<Users_Inscription_POSTResponse> ExecuteAsync(Users_Inscription_POST command)
+        private readonly IRepository repository;
+
+        public Users_Inscription_POSTHandler(IRepository repository)
         {
-            await Task.CompletedTask;
+            this.repository = repository;
+        }
+
+        public override async Task<Users_Inscription_POSTResponse> ExecuteAsync(Users_Inscription_POST message)
+        {
+            var utilisateur = new Utilisateur()
+            {
+                Id = Guid.NewGuid(),
+                Email = message.Email
+            };
+
+            var profile = new Profile()
+            {
+                IdUtilisateur = utilisateur.Id,
+                Nom = message.Nom,
+                Prenom = message.Prenom
+            };
+
+            await repository.InsertAsync(utilisateur);
+            await repository.InsertAsync(profile);
+
             return new Users_Inscription_POSTResponse()
             {
-                jwt = "jwt",
+                Claims = new UserClaims() { IdUtilisateur = utilisateur.Id },
                 Redirect = new Vendeur_Dashboard_PAGE()
             };
         }

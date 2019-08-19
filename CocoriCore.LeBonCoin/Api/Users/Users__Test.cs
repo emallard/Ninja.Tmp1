@@ -14,17 +14,16 @@ namespace CocoriCore.LeBonCoin
         {
             var user = CreateUserFluent();
 
-            var dashboard = user.Display(new Users_Inscription_PAGE())
-                .Result.GetForm(p => p.Form)
-                        .Follow(new Users_Inscription_POST()
-                        {
-                            Email = "aa@aa.aa",
-                            Password = "azerty",
-                            PasswordConfirmation = "azerty"
-                        }, r => r.Redirect
-                    )
-                .Result
-                .Page;
+            var dashboard =
+            user.Display(new Users_Inscription_PAGE())
+                .GetForm(p => p.Form)
+                .Submit(new Users_Inscription_POST()
+                {
+                    Email = "aa@aa.aa",
+                    Password = "azerty",
+                    PasswordConfirmation = "azerty"
+                })
+                .Redirect(r => r.Redirect);
             /*
             var dashboard = await user.Display(await user.Submit(inscription.Form, new Users_Inscription_POST()
             {
@@ -33,7 +32,7 @@ namespace CocoriCore.LeBonCoin
                 PasswordConfirmation = "azerty"
             }));
             */
-            dashboard.Should().NotBeNull();
+            dashboard.Page.Should().NotBeNull();
             /*
 
             var accueil = await user.Click(dashboard.MenuUtilisateur.Deconnexion);
@@ -49,24 +48,23 @@ namespace CocoriCore.LeBonCoin
             */
         }
 
-        public async Task MauvaisMotDePasse()
+        [Fact]
+        public void MauvaisMotDePasse()
         {
-            //var browser = CreateUser();
-            TestBrowser browser = null;
-            var accueil = await browser.Display(new Accueil_PAGE());
+            var user = CreateUserFluent();
+            var connexion =
+            user.Display(new Accueil_PAGE())
+                .Display(p => p.Connexion);
 
-            var connexion = await browser.Display(accueil.Connexion);
-
-            Func<Task> a = async () => await browser
-                .GetForm(connexion.Form)
-                .Follow(new Users_Connexion_POST()
+            Action a = () => connexion
+                .GetForm(p => p.Form)
+                .Submit(new Users_Connexion_POST()
                 {
                     Email = "aa@aa.aa",
                     Password = "azerty"
-                }, response => response.Redirect);
+                });
 
 
-            //Action a = () => browser.Click(connexion.Formulaire.Submit);
             //a.Should().Throw();
         }
 
@@ -108,29 +106,32 @@ namespace CocoriCore.LeBonCoin
             var user = CreateUserFluent();
             var emails = GetEmailReader();
 
-            var confirmation = user.Display(new Users_Inscription_PAGE())
-                .Result.GetForm(p => p.Form)
-                        .Follow(new Users_Inscription_POST()
-                        {
-                            Email = "aa@aa.aa",
-                            Password = "azerty",
-                            PasswordConfirmation = "azerty"
-                        }, r => r.Redirect)
-                .Result.Click(p => p.MenuUtilisateur.Deconnexion)
-                .Result.Click(p => p.Connexion)
-                .Result.Click(p => p.MotDePasseOublie)
-                .Result.GetForm(p => p.Form)
-                        .Follow(new Users_MotDePasseOublie_POST()
-                        {
-                            Email = "aa@aa.aa"
-                        }, r => r.Redirect)
-                .Result
+            var confirmation =
+            user.Display(new Users_Inscription_PAGE())
+                    .GetForm(p => p.Form)
+                    .Submit(new Users_Inscription_POST()
+                    {
+                        Email = "aa@aa.aa",
+                        Password = "azerty",
+                        PasswordConfirmation = "azerty"
+                    })
+                    .Redirect(r => r.Redirect)
+                .Display(p => p.MenuUtilisateur.Deconnexion)
+                .Display(p => p.Connexion)
+                .Display(p => p.MotDePasseOublie)
+                    .GetForm(p => p.Form)
+                    .Submit(new Users_MotDePasseOublie_POST()
+                    {
+                        Email = "aa@aa.aa"
+                    })
+                    .Redirect(r => r.Redirect)
+
                 .Page;
 
             confirmation.Should().NotBeNull();
 
             var email = (EmailMotDePasseOublie)(await emails.Read("aa@aa.aa")).Body;
-            await user.Display(new Users_SaisieNouveauMotDePasse_Token_PAGE() { Token = email.Token });
+            user.Display(new Users_SaisieNouveauMotDePasse_Token_PAGE() { Token = email.Token });
         }
     }
 }

@@ -15,24 +15,26 @@ namespace CocoriCore.LeBonCoin
             var vendeur = CreateUserFluent();
             //user.EnTantQueVendeur();
             var vendeurAnnonce = vendeur.Display(new Vendeur_Dashboard_PAGE())
-                .Result.Click(p => p.NouvelleAnnonce)
-                .Result.GetForm(p => p.Form)
-                    .Follow(new Vendeur_NouvelleAnnonce_POST()
-                    {
-                        Ville = "Paris",
-                        Categorie = "Voitures"
-                    }, r => r.Redirect)
-                .Result.Page;
+                .Display(p => p.NouvelleAnnonce)
+                .GetForm(p => p.Form)
+                .Submit(new Vendeur_NouvelleAnnonce_POST()
+                {
+                    Ville = "Paris",
+                    Categorie = "Voitures"
+                })
+                .Redirect(r => r.Redirect)
+                .Page;
 
             var visiteur = CreateUserFluent();
             var annonces = visiteur.Display(new Accueil_PAGE())
-                .Result.GetForm(p => p.Form)
-                    .Follow(new Annonces_POST()
-                    {
-                        Ville = "Paris",
-                        Categorie = ""
-                    }, r => r.Redirect)
-                .Result.Page;
+                .GetForm(p => p.Form)
+                .Submit(new Annonces_POST()
+                {
+                    Ville = "Paris",
+                    Categorie = ""
+                })
+                .Redirect(r => r.Redirect)
+                .Page;
 
             annonces.Items.Should().HaveCount(1);
             annonces.Items[0].Ville.Should().Be("Paris");

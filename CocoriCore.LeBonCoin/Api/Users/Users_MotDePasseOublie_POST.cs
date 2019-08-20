@@ -12,7 +12,7 @@ namespace CocoriCore.LeBonCoin
 
     public class Users_MotDePasseOublie_POSTResponse
     {
-        public Users_MotDePasseOublie_Confirmation_PAGE Redirect = new Users_MotDePasseOublie_Confirmation_PAGE();
+        public Users_MotDePasseOublie_Confirmation_PAGE MotDePasseOublie_Confirmation = new Users_MotDePasseOublie_Confirmation_PAGE();
     }
 
     public class Users_MotDePasseOublie_POSTHandler : MessageHandler<Users_MotDePasseOublie_POST, Users_MotDePasseOublie_POSTResponse>

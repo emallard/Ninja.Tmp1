@@ -99,7 +99,7 @@ namespace CocoriCore.LeBonCoin
             this.browserFluent = browserFluent;
             this.postResponse = postResponse;
         }
-        public TestBrowserFluent<T> Redirect<T>(Func<TPostResponse, IMessage<T>> getMessage)
+        public TestBrowserFluent<T> ThenFollow<T>(Func<TPostResponse, IMessage<T>> getMessage)
         {
             var message = getMessage(postResponse);
             this.browserFluent.history.Event(this.browserFluent.Id, HistoryEventType.FormRedirect, message);

@@ -7,7 +7,7 @@ using CocoriCore.Linq.Async;
 namespace CocoriCore.LeBonCoin
 {
 
-    public class Annonces_POST : ICommand, IMessage<Annonces_POSTResponse>
+    public class Annonces_GET : ICommand, IMessage<Annonces_POSTResponse>
     {
         public string Ville;
         public string Categorie;
@@ -15,23 +15,23 @@ namespace CocoriCore.LeBonCoin
 
     public class Annonces_POSTResponse
     {
-        public Annonces_PAGE Redirect;
+        public Annonces_PAGE Annonces;
     }
 
 
-    public class Annonces_POSTHandler : MessageHandler<Annonces_POST, Annonces_POSTResponse>
+    public class Annonces_POSTHandler : MessageHandler<Annonces_GET, Annonces_POSTResponse>
     {
 
         public Annonces_POSTHandler()
         {
         }
 
-        public override async Task<Annonces_POSTResponse> ExecuteAsync(Annonces_POST command)
+        public override async Task<Annonces_POSTResponse> ExecuteAsync(Annonces_GET command)
         {
             await Task.CompletedTask;
             return new Annonces_POSTResponse()
             {
-                Redirect = new Annonces_PAGE()
+                Annonces = new Annonces_PAGE()
                 {
                     Ville = command.Ville,
                     Categorie = command.Categorie

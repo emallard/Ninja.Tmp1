@@ -25,7 +25,7 @@ namespace CocoriCore.LeBonCoin
                     Nom = "DeNice",
                     Prenom = "Brice"
                 })
-                .Redirect(r => r.Redirect);
+                .ThenFollow(r => r.Vendeur_Dashboard);
 
             dashboard.Page.Nom.Should().Be("DeNice");
             dashboard.Page.Prenom.Should().Be("Brice");
@@ -84,6 +84,7 @@ namespace CocoriCore.LeBonCoin
 
             b.Should().Throw<Exception>();
 
+            Console.WriteLine(GetHistory().Summary());
         }
 
         [Fact]
@@ -95,25 +96,25 @@ namespace CocoriCore.LeBonCoin
 
             var confirmation =
             user.Display(new Users_Inscription_PAGE())
-                    .GetForm(p => p.Form)
-                    .Submit(new Users_Inscription_POST()
-                    {
-                        Email = "aa@aa.aa",
-                        Password = "azerty",
-                        PasswordConfirmation = "azerty",
-                        Nom = "Dupont",
-                        Prenom = "Jean"
-                    })
-                    .Redirect(r => r.Redirect)
+                .GetForm(p => p.Form)
+                .Submit(new Users_Inscription_POST()
+                {
+                    Email = "aa@aa.aa",
+                    Password = "azerty",
+                    PasswordConfirmation = "azerty",
+                    Nom = "Dupont",
+                    Prenom = "Jean"
+                })
+                .ThenFollow(r => r.Vendeur_Dashboard)
                 .Follow(p => p.MenuUtilisateur.Deconnexion)
                 .Follow(p => p.Connexion)
                 .Follow(p => p.MotDePasseOublie)
-                    .GetForm(p => p.Form)
-                    .Submit(new Users_MotDePasseOublie_POST()
-                    {
-                        Email = "aa@aa.aa"
-                    })
-                    .Redirect(r => r.Redirect)
+                .GetForm(p => p.Form)
+                .Submit(new Users_MotDePasseOublie_POST()
+                {
+                    Email = "aa@aa.aa"
+                })
+                .ThenFollow(r => r.MotDePasseOublie_Confirmation)
                 .Page;
 
             confirmation.Should().NotBeNull();
@@ -121,6 +122,7 @@ namespace CocoriCore.LeBonCoin
             var emails = await emailReader.Read<EmailMotDePasseOublie>("aa@aa.aa");
             emails.Should().HaveCount(1);
             var lien = emails[0].Body.Lien;
+
             var dashboard = user.Display(lien)
                 .GetForm(p => p.Form)
                 .Submit(new Users_SaisieNouveauMotDePasse_Token_POST
@@ -129,14 +131,14 @@ namespace CocoriCore.LeBonCoin
                     MotDePasse = "nouveauPassw0rd",
                     Confirmation = "nouveauPassw0rd",
                 })
-                .Redirect(r => r.Redirect)
+                .ThenFollow(r => r.Redirect)
                 .GetForm(p => p.Form)
                 .Submit(new Users_Connexion_POST()
                 {
                     Email = "aa@aa.aa",
                     Password = "nouveauPassw0rd",
                 })
-                .Redirect(r => r.Redirect);
+                .ThenFollow(r => r.Redirect);
 
             dashboard.Page.Should().NotBeNull();
 

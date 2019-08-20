@@ -19,7 +19,7 @@ namespace CocoriCore.LeBonCoin
     {
         public IClaims Claims;
 
-        public Vendeur_Dashboard_PAGE Redirect;
+        public Vendeur_Dashboard_PAGE Vendeur_Dashboard;
     }
 
     public class Users_Inscription_POSTHandler : MessageHandler<Users_Inscription_POST, Users_Inscription_POSTResponse>
@@ -52,7 +52,7 @@ namespace CocoriCore.LeBonCoin
             return new Users_Inscription_POSTResponse()
             {
                 Claims = new UserClaims() { IdUtilisateur = utilisateur.Id },
-                Redirect = new Vendeur_Dashboard_PAGE()
+                Vendeur_Dashboard = new Vendeur_Dashboard_PAGE()
             };
         }
     }

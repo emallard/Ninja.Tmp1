@@ -26,7 +26,7 @@ namespace CocoriCore.LeBonCoin
     public class Annonces_PAGEResponse
     {
         public Annonces_PAGEItem[] Items;
-        public Form<Annonces_POST, Annonces_POSTResponse> Form = new Form<Annonces_POST, Annonces_POSTResponse>();
+        public Form<Annonces_GET, Annonces_POSTResponse> Form = new Form<Annonces_GET, Annonces_POSTResponse>();
     }
 
     public class Annonces_PAGEHandler : MessageHandler<Annonces_PAGE, Annonces_PAGEResponse>

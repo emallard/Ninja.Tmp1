@@ -23,18 +23,18 @@ namespace CocoriCore.LeBonCoin
                     Ville = "Paris",
                     Categorie = "Voitures"
                 })
-                .Redirect(r => r.Redirect)
+                .ThenFollow(r => r.Vendeur_Annonces_Id)
                 .Page;
 
             var visiteur = CreateUser("visiteur");
             var annonces = visiteur
                 .GetForm(p => p.Form)
-                .Submit(new Annonces_POST()
+                .Submit(new Annonces_GET()
                 {
                     Ville = "Paris",
                     Categorie = ""
                 })
-                .Redirect(r => r.Redirect)
+                .ThenFollow(r => r.Annonces)
                 .Page;
             /*
             annonces.Items.Should().HaveCount(1);

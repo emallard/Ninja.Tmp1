@@ -16,7 +16,7 @@ namespace CocoriCore.LeBonCoin
                     Password = "azerty",
                     PasswordConfirmation = "azerty"
                 })
-                .Redirect(r => r.Redirect);
+                .ThenFollow(r => r.Vendeur_Dashboard);
 
             return dashboard;
         }

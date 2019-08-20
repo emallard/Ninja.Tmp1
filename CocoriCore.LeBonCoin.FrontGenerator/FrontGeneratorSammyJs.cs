@@ -7,7 +7,7 @@ using Xunit;
 
 namespace CocoriCore.LeBonCoin.FrontGenerator
 {
-    public class FrontGenerator
+    public class FrontGeneratorSammyJs
     {
         [Fact]
         public void Main()
@@ -17,7 +17,7 @@ namespace CocoriCore.LeBonCoin.FrontGenerator
             var generator = new SammyJsGenerator(
                 new SammyJsGeneratorOptions()
                 {
-                    OutputPath = "../../../../CocoriCore.LeBonCoin.Front"
+                    OutputPath = "../../../../CocoriCore.LeBonCoin.Front/sammyjs"
                 },
                 new PageInspector(CocoriCore.LeBonCoin.Api.RouterConfiguration.Options()),
                 new TypescriptFormatter());

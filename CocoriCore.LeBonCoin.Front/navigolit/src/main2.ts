@@ -1,93 +1,38 @@
+
 import { LitElement, html, property, customElement } from "lit-element";
 import Navigo from "navigo/lib/navigo.es.js";
 
-/*import {
-  LitElement,
-  html
-} from 'lit-element.js'
-import Navigo from 'navigo.es.js'
-*/
-console.log('Hello WebComponents')
-
-@customElement('greeter-element')
-export class GreeterElement extends LitElement {
-  @property() firstName;
-
-  @property() lastName;
-
-  render() {
-    return html`
-        <h1>Hello ${this.firstName} ${this.lastName}</h1>
-      `;
-  }
-}
-
-@customElement('my-button')
-class MyButton extends LitElement {
-  render() {
-    return html`
-      <button>My Button</button>
-    `
-  }
-}
-
-@customElement('my-pagea')
-class PageA extends LitElement {
-  render() {
-    return html`
-      <div>
-        Page A
-        <div></div>
-      </div>
-    `
-  }
-}
-
-@customElement('my-pageb')
-class PageB extends LitElement {
-  render() {
-    return html`
-      <div>
-        Page B
-        <div></div>
-      </div>
-    `
-  }
-}
-
-@customElement('my-awesome-app')
-class MyAwesomeApp extends LitElement {
+@customElement('my-app')
+class MyApp extends LitElement {
   @property() route;
 
   constructor() {
     super()
-    let router = new Navigo('/', true, '#!')
+    let router = new Navigo('/', false)
+    
     router
-      .on('pagea', () => {
-        this.route = html`
-          <my-pagea></my-pagea>
-        `
-      })
-      .on('pageb', () => {
-        this.route = html`
-          <my-pageb></my-pageb>
-        `
-      })
-      .on('*', () => {
-        console.log('kevin')
-        this.route = html`
-          This is home.
-        `
-      })
+    .on('/api', () => { this.route = html`<accueil-page></accueil-page>` })
+    .on('/api/users/connexion', () => { this.route = html`<users-connexion-page></users-connexion-page>` })
+    .on('/api/users/inscription', () => { this.route = html`<users-inscription-page></users-inscription-page>` })
+    .on('/api/users/mot-de-passe-oublie', () => { this.route = html`<users-motdepasseoublie-page></users-motdepasseoublie-page>` })
+    .on('/api/vendeur', () => { this.route = html`<vendeur-dashboard-page></vendeur-dashboard-page>` })
+    .on('/api/vendeur/nouvelle-annonce', () => { this.route = html`<vendeur-nouvelleannonce-page></vendeur-nouvelleannonce-page>` })
+    .on('/api/vendeur/annonces', () => { this.route = html`<vendeur-annonces-page></vendeur-annonces-page>` })
+    .on('/api/vendeur/annonces/id:guid', () => { this.route = html`<vendeur-annonces-id-page></vendeur-annonces-id-page>` })
+    .on('/api/annonces', () => { this.route = html`<annonces-page></annonces-page>` })
+    .on('/api/annonces/id:guid', () => { this.route = html`<annonces-id-page></annonces-id-page>` })
+    ;
+
+    
     router.resolve()
   }
   render() {
     return html`
       <div>
         <h1>MyAwesomeApp</h1>
-        <a href="#!/pagea">Page A</a> <a href="#!/pageb">Page B</a>
-        <a href="#!/">Home</a> ${this.route}
+        ${this.route}
       </div>
     `
   }
 }
+

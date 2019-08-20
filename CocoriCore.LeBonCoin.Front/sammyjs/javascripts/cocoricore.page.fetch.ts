@@ -31,8 +31,6 @@ abstract class Page {
             {
                 headers: myHeaders,
                 method: "GET",
-                //mode: 'cors',
-                //credentials: 'include'
             });
 
         let txt = await response.text();
